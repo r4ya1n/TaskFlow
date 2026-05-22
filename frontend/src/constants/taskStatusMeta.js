@@ -5,7 +5,7 @@ import PlayIcon from "@/icons/task_status/PlayIcon.vue";
 
 export const TASK_STATUS = {
     todo: {
-        label: "К выполнению",
+        label: "К работе",
         icon: CircleIcon,
         textColor: "text-gray",
         bgColor: "bg-tr-gray"
