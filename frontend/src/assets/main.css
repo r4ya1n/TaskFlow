@@ -17,4 +17,18 @@
   --color-text2: #8e9099;
   --color-text3: #565860;
 
+  --color-blue: #7ab4f0;
+  --color-tr-blue: rgba(74, 144, 232, .12);
+  --color-red: #e05252;
+  --color-red2: #f08080; /* light red */
+  --color-tr-red2: rgba(224,82,82,.1);
+  --color-yellow: #f0c070;
+  --color-tr-yellow: rgba(240,160,64,.1);
+  --color-blue: #7ab4f0;
+  --color-tr-blue: rgba(74,144,232,.12);
+  --color-teal: #5ee8c6;
+  --color-tr-teal: rgba(28, 199, 160, .1);
+  --color-gray: #565860;
+  --color-tr-gray: rgba(255, 255, 255, .05);
+
 }
