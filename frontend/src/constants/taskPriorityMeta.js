@@ -7,26 +7,34 @@ import { COLORS } from "./colors";
 export const TASK_PRIORITY = {
     low: {
         label: "Низкий",
+        engLabel: "low",
         icon: ArrowDownIcon,
         textColor: COLORS.gray,
-        bgColor: COLORS.trGray
+        bgColor: COLORS.trGray,
+        group: "priority"
     },
     medium: {
         label: "Средний",
+        engLabel: "medium",
         icon: Minus,
         textColor: COLORS.blue,
-        bgColor: COLORS.trBlue
+        bgColor: COLORS.trBlue,
+        group: "priority"
     },
     high: {
         label: "Высокий",
+        engLabel: "high",
         icon: ArrowUpIcon,
         textColor: COLORS.yellow,
-        bgColor: COLORS.trYellow
+        bgColor: COLORS.trYellow,
+        group: "priority"
     },
     urgent: {
         label: "Срочно",
+        engLabel: "urgent",
         icon: FireIcon,
         textColor: COLORS.red2,
-        bgColor: COLORS.trRed2
+        bgColor: COLORS.trRed2,
+        group: "priority"
     }
 }
