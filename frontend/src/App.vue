@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-bg">
+  <div class="flex h-screen bg-bg2">
     <Sidebar></Sidebar>
     <Task></Task>
   </div>

@@ -26,6 +26,6 @@ export const TASK_STATUS = {
         label: "Готово",
         icon: CheckMarkIcon,
         textColor: "text-teal",
-        bgColor: "br-tr-teal"
+        bgColor: "bg-tr-teal"
     }
 }
