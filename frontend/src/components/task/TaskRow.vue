@@ -14,29 +14,42 @@
                 </div>
                 <div v-else class="bg-bg2 w-5 h-5 rounded-md border border-border hover:border-accent"></div>
             </div>
-
             <div>
                 <h3 class="text-sm" :class="{'line-through': task.isDone, 'text-gray': task.isDone}">{{ task.name }}</h3>
                 <div class="flex items-center gap-3">
-                    <TaskTagPill v-for="tag in task.tags" :label="tag"></TaskTagPill>
+                    <TaskTagPill v-for="tag in task.tags" :tag="tag"></TaskTagPill>
                 </div>
             </div>
         </div>
-        <TaskStatusPill class="col-span-1" :status="task.status"></TaskStatusPill>
+        <MediumPill
+        :label="statusMeta.label"
+        :icon="statusMeta.icon"
+        :text-color="statusMeta.textColor"
+        :bg-color="statusMeta.bgColor"
+        ></MediumPill>
         <TaskExecutor class="col-span-1" :executor="task.executor"></TaskExecutor>
-        <TaskPriorityPill class="col-span-1" :priority="task.priority"></TaskPriorityPill>
-        <div class="my-auto mr-auto text-xs font-medium font-mono" :class="textColor">{{ task.deadline }}</div>
+        <MediumPill
+        :label="priorityMeta.label"
+        :icon="priorityMeta.icon"
+        :text-color="priorityMeta.textColor"
+        :bg-color="priorityMeta.bgColor"
+        ></MediumPill>
+        <div
+        class="my-auto mr-auto text-xs font-medium font-mono"
+        :style="{color: priorityMeta.textColor}">
+            {{ task.deadline }}
+        </div>
     </div>
 </template>
 
 <script setup>
 import { TASK_PRIORITY } from '@/constants/taskPriorityMeta';
 import TaskExecutor from './TaskExecutor.vue';
-import TaskPriorityPill from './TaskPriorityPill.vue';
-import TaskStatusPill from './TaskStatusPill.vue';
 import TaskTagPill from './TaskTagPill.vue';
 import CheckIcon from '@/icons/CheckIcon.vue';
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
+import MediumPill from '../pills/MediumPill.vue';
+import { TASK_STATUS } from '@/constants/taskStatusMeta';
 
 const { task, idx } = defineProps({
     task: {
@@ -48,11 +61,10 @@ const { task, idx } = defineProps({
         required: true
     }
 })
-
-const formatted_status = task.priority.toLowerCase().trim()
-const textColor = TASK_PRIORITY[formatted_status].textColor
-
 const tasks = inject("tasks")
+
+const statusMeta = computed(() => TASK_STATUS[task.status.toLowerCase().trim()]) 
+const priorityMeta = computed(() => TASK_PRIORITY[task.priority.toLowerCase().trim()]) 
 
 const toogleDoneTask = function() {
     if (!task.isDone) {

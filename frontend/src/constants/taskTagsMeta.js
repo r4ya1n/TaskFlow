@@ -1,27 +1,29 @@
+import { COLORS } from "./colors";
+
 export const TASK_TAGS = {
     frontend: {
         label: "Frontend",
-        textColor: "text-blue",
-        bgColor: "bg-tr-blue",
+        textColor: COLORS.blue,
+        bgColor: COLORS.trBlue,
     },
     backend: {
         label: "Backend",
-        textColor: "text-accent2",
-        bgColor: "bg-accent-bg",
+        textColor: COLORS.accent,
+        bgColor: COLORS.trAccent,
     },
     design: {
         label: "Design",
-        textColor: "text-teal",
-        bgColor: "bg-tr-teal",
+        textColor: COLORS.teal,
+        bgColor: COLORS.trTeal,
     },
     devops: {
         label: "DevOps",
-        textColor: "text-yellow",
-        bgColor: "bg-tr-yellow",
+        textColor: COLORS.yellow,
+        bgColor: COLORS.trYellow,
     },
     testing: {
         label: "Testing",
-        textColor: "text-teal",
-        bgColor: "bg-tr-teal",
+        textColor: COLORS.teal,
+        bgColor: COLORS.trTeal,
     }
 }

@@ -1,23 +1,24 @@
 <template>
-    <div class="text-xs px-2 py-px rounded-2xl" :class="textColor + ' ' + bgColor">
-        {{ label }}
-    </div>
+    <SmallPill
+    :label="tagMeta.label",
+    :text-color="tagMeta.textColor"
+    :bg-color="tagMeta.bgColor"
+    ></SmallPill>
 </template>
 
 <script setup>
 import { TASK_TAGS } from '@/constants/taskTagsMeta';
+import SmallPill from '../pills/SmallPill.vue';
+import { computed } from 'vue';
 
-const formatted_label = label.toLowerCase().trim()
-const textColor = TASK_TAGS[formatted_label].textColor
-const bgColor = TASK_TAGS[formatted_label].bgColor
-
-const { label } = defineProps({
-    label: {
+const { tag } = defineProps({
+    tag: {
         type: String,
         required: true
     }
 })
 
+const tagMeta = computed(() => TASK_TAGS[tag.toLowerCase().trim()]) 
 </script>
 
 <style scoped>
