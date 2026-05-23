@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 text-text">
+    <div class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-bg3 scrollbar-track-bg2 text-text">
         <TaskHeader></TaskHeader>
         <div class="flex">
             <TaskFilter></TaskFilter>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { computed, provide, ref } from 'vue';
+import { computed, provide, reactive, ref } from 'vue';
 import TaskHeader from './TaskHeader.vue';
 import TaskRow from './TaskRow.vue';
 import TaskFilter from '../task-filter/TaskFilterSidebar.vue';
@@ -39,7 +39,7 @@ const tasks = ref([
     },
     {
         name: "Настройка CI/CD пайплайна",
-        tags: ["Devops"],
+        tags: ["DevOps"],
         status: "todo",
         old_status: "",
         executor: "Мария Смирнова",
@@ -71,12 +71,30 @@ const tasks = ref([
 
 provide("tasks", tasks)
 
-const QueryByName = ref("")
-provide("QueryByName", QueryByName)
+const taskFilter = reactive({
+    name: '',
+    description: '',
+    status: '',
+    priority: '',
+    tags: []
+})
+provide("taskFilter", taskFilter)
 
-const displayTasks = computed(
-    () => tasks.value.filter(
-    (task) => task.name.toLowerCase().includes(QueryByName.value.toLowerCase())))
+const displayTasks = computed(() => tasks.value.filter(task => {
+    if (!task.name.toLowerCase().includes(taskFilter.name.toLowerCase())) {
+        return false
+    }
+    if (taskFilter.status && task.status.toLowerCase() !== taskFilter.status.toLowerCase()) {
+        return false
+    }
+    if (taskFilter.priority && task.priority.toLowerCase() !== taskFilter.priority.toLowerCase()) {
+        return false
+    }
+    if (!taskFilter.tags.every(tag => task.tags.includes(tag))) {
+        return false
+    }
+    return true
+}))
 
 </script>
 
