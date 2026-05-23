@@ -1,16 +1,20 @@
 <template>
     <div class="flex-1 text-text">
         <TaskHeader></TaskHeader>
-        <div class="flex flex-col gap-2 px-6 py-5">
-            <TaskRow v-for="(task, i) in tasks" :task="task" :idx="i" :key="task.name"></TaskRow>
+        <div class="flex">
+            <TaskFilter></TaskFilter>
+            <div class="flex flex-1 flex-col gap-2 px-6 py-5">
+                <TaskRow v-for="(task, i) in displayTasks" :task="task" :idx="i" :key="task.name"></TaskRow>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { provide, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import TaskHeader from './TaskHeader.vue';
 import TaskRow from './TaskRow.vue';
+import TaskFilter from '../task-filter/TaskFilterSidebar.vue';
 
 const tasks = ref([
     {
@@ -64,7 +68,15 @@ const tasks = ref([
         isDone: false
     }
 ])
+
 provide("tasks", tasks)
+
+const QueryByName = ref("")
+provide("QueryByName", QueryByName)
+
+const displayTasks = computed(
+    () => tasks.value.filter(
+    (task) => task.name.toLowerCase().includes(QueryByName.value.toLowerCase())))
 
 </script>
 
