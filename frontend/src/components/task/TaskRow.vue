@@ -3,7 +3,9 @@
      bg-bg2 py-2 px-3 rounded-xl
      border border-border
      hover:bg-bg3 cursor-pointer">
+     <!-- Title box -->
         <div class="col-span-2 flex items-center gap-5">
+            <!-- Checkbox -->
             <div class="" @click="toggleDoneTask">
                 <div
                 v-if="task.isDone"
@@ -15,25 +17,31 @@
                 <div v-else class="bg-bg2 w-5 h-5 rounded-md border border-border hover:border-accent"></div>
             </div>
             <div>
+                <!-- Text title -->
                 <h3 class="text-sm" :class="{'line-through': task.isDone, 'text-gray': task.isDone}">{{ task.name }}</h3>
+                <!-- Tags -->
                 <div class="flex items-center gap-3">
                     <TaskTagPill v-for="tag in task.tags" :key="tag" :tag="tag"></TaskTagPill>
                 </div>
             </div>
         </div>
+        <!-- Status -->
         <MediumPill
         :label="statusMeta.label"
         :icon="statusMeta.icon"
         :text-color="statusMeta.textColor"
         :bg-color="statusMeta.bgColor"
         ></MediumPill>
+        <!-- Executors -->
         <TaskExecutor class="col-span-1" :executor="task.executor"></TaskExecutor>
+        <!-- Priority -->
         <MediumPill
         :label="priorityMeta.label"
         :icon="priorityMeta.icon"
         :text-color="priorityMeta.textColor"
         :bg-color="priorityMeta.bgColor"
         ></MediumPill>
+        <!-- Deadline -->
         <div
         class="my-auto mr-auto text-xs font-medium font-mono"
         :style="{color: priorityMeta.textColor}">

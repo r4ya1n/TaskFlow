@@ -4,6 +4,14 @@
         <div class="flex">
             <TaskFilter></TaskFilter>
             <div class="flex flex-1 flex-col gap-2 px-6 py-5">
+                <!-- TaskRowHeader.vue -->
+                <div class="grid grid-cols-6 px-4 mb-1 text-xs font-medium text-text3 uppercase tracking-wider">
+                    <div class="col-span-2 pl-9">Задача</div>
+                    <div>Статус</div>
+                    <div>Исполнитель</div>
+                    <div>Приоритет</div>
+                    <div>Дедлайн</div>
+                </div>
                 <TaskRow v-for="(task, i) in displayTasks" :task="task" :idx="i" :key="task.name"></TaskRow>
             </div>
         </div>
