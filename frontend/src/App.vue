@@ -1,7 +1,9 @@
 <template>
-  <div class="flex h-screen overflow-hidden bg-bg2">
-    <Sidebar></Sidebar>
-    <Task></Task>
+  <div class="bg-bg2">
+    <div class="flex mx-auto max-w-360 h-screen overflow-hidden">
+      <Sidebar></Sidebar>
+      <Task></Task>
+    </div>
   </div>
 </template>
 

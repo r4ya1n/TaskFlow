@@ -1,13 +1,25 @@
 <template>
-    <aside class="flex flex-col justify-between w-56 bg-bg2 text-text px-4 py-6 border-x border-border">
+    <aside class="flex flex-col justify-between w-20 px-2 py-6
+    bg-bg2 text-text border-x border-border
+    xl:w-56 xl:px-4 transition-width duration-200 ease-out">
         <div class="">
-            <h2 class="flex items-center gap-2 px-3 mb-12 cursor-pointer">
+            <h2 class="flex items-center justify-center gap-2 px-3 mb-12 cursor-pointer xl:justify-start">
                 <Logo></Logo>
-                <span class="text-base font-semibold font-sans">TaskFlow</span>
+                <span class="text-base font-semibold font-sans
+                hidden xl:inline sidebar-text">TaskFlow</span>
             </h2>
-            <SidebarNav v-for="group in sidebar" :group="group"></SidebarNav>
+            <nav class="flex flex-col xl:gap-3">
+                <NavGroup v-for="group in sidebar" :group="group"></NavGroup>
+            </nav>
         </div>
-        <SidebarUser :user="user"></SidebarUser>
+        <div class="pt-5 py-2 px-3 border-t border-border flex items-center gap-3">
+            <ProfileIcon :first-name="user.firstName" :sur-name="user.surName"></ProfileIcon>
+
+            <div class="leading-tight hidden xl:inline sidebar-text">
+                <p class="text-sm font-medium">{{ user.firstName + " " + user.surName[0] + "." }}</p>
+                <p class="text-xs text-zinc-500">{{ user.role }}</p>
+            </div>
+        </div>
     </aside>
 </template>
 
@@ -16,10 +28,10 @@ import CalendarIcon from '@/icons/sidebar/CalendarIcon.vue';
 import DashboardIcon from '@/icons/sidebar/DashboardIcon.vue';
 import SettingIcon from '@/icons/sidebar/SettingIcon.vue';
 import TaskIcon from '@/icons/sidebar/TaskIcon.vue';
-import UserIcon from '@/icons/sidebar/UserIcon.vue';
-import SidebarNav from './SidebarNav.vue';
 import Logo from '@/icons/Logo.vue';
-import SidebarUser from './SidebarUser.vue';
+import NavGroup from './NavGroup.vue';
+import ProfileIcon from '@/icons/ProfileIcon.vue';
+import UserIcon from '@/icons/sidebar/UserIcon.vue';
 
 const sidebar = [{
     groupName: "Главная",
@@ -51,4 +63,15 @@ const user = {
 }
 </script>
 
-<style scoped></style>
+<style>
+.sidebar-text {
+    overflow: hidden;
+    white-space: nowrap;
+
+    transform-origin: left;
+
+    transition: transform 200ms ease-out,
+        opacity 200ms ease-out,
+        max-width 200ms ease-out;
+}
+</style>
