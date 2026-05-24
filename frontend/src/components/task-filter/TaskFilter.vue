@@ -7,7 +7,7 @@
                 <SmallPill
                 v-for="tag in TASK_TAGS" :key="tag.label"
                 :label="tag.label"
-                :text-color="tag.textColor",
+                :text-color="tag.textColor"
                 :bg-color="tag.bgColor"
                 class="cursor-pointer"
                 @click="toggleTag(tag.label)"

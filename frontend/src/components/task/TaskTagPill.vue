@@ -1,6 +1,6 @@
 <template>
     <SmallPill
-    :label="tagMeta.label",
+    :label="tagMeta.label"
     :text-color="tagMeta.textColor"
     :bg-color="tagMeta.bgColor"
     ></SmallPill>
