@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col gap-3">
         <!-- Теги -->
-        <div class="flex flex-col gap-2">
-            <h3 class="text-text3 text-sm uppercase">ТЕГИ</h3>
+        <div class="flex flex-col gap-2 w-47">
+            <h3 class="text-text3 text-sm uppercase animation-text">ТЕГИ</h3>
             <div class="flex items-center flex-wrap gap-3">
                 <SmallPill
                 v-for="tag in TASK_TAGS" :key="tag.label"

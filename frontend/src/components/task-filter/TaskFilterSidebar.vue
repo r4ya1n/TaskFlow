@@ -1,7 +1,12 @@
 <template>
-    <div class="w-55 overflow-hidden border flex flex-col gap-3 border-border px-4 py-5">
+    <div class="py-5 overflow-hidden border flex flex-col gap-3 border-border
+    transition-width duration-400 ease-in-out"
+    :class="filterIsOpen ? 'max-w-55 px-4' : 'max-w-0 border-0'">
         <div class="flex flex-col gap-2">
-            <h3 class="text-text3 text-sm uppercase">Поиск</h3>
+            <div class="flex items-center justify-between text-text3">
+                <h3 class="text-sm uppercase animation-text">Поиск</h3>
+                <CloseIcon @click="filterIsOpen = false" class="w-5 h-5 cursor-pointer"></CloseIcon>
+            </div>
             <MyInput v-model="taskFilter.name" placeholder="По названию..." :icon="LoupIcon"></MyInput>
             <MyInput placeholder="По описанию..." :icon="AlignLeft"></MyInput>
         </div>
@@ -15,8 +20,10 @@ import LoupIcon from '@/icons/LoupIcon.vue';
 import MyInput from '../MyInput.vue';
 import AlignLeft from '@/icons/AlignLeft.vue';
 import { inject } from 'vue';
+import CloseIcon from '@/icons/CloseIcon.vue';
 
 const taskFilter = inject("taskFilter")
+const filterIsOpen = inject("filterIsOpen")
 
 </script>
 

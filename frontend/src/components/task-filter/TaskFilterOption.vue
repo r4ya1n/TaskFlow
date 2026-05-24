@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-sm text-text3 mb-2 uppercase">
+        <h3 class="text-sm text-text3 mb-2 uppercase animation-text">
             {{ option.title }}
         </h3>
         <div class="flex flex-col gap-1">

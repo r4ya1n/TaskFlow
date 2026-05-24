@@ -1,7 +1,7 @@
 <template>
     <div>
         <p class="font-sans text-xs font-medium text-text3 mb-2 uppercase tracking-wide
-            hidden xl:inline sidebar-text">
+            hidden xl:inline animation-text">
             {{ group.groupName }}
         </p>
 
