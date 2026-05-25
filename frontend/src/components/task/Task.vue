@@ -15,7 +15,7 @@
         <div class="flex">
             <TaskFilterSidebar></TaskFilterSidebar>
             <div ref="tasksContainer" class="@container/tasks flex flex-1">
-                <div class="@3xl/tasks:px-6 w-full flex-col gap-2 px-3 py-5">
+                <div class="@3xl/tasks:px-6 flex-col gap-2 px-3 py-5">
                     <!-- TaskRowHeader -->
                     <div
                         class="@3xl/tasks:grid hidden grid-cols-6 px-4 mb-1 text-xs font-medium text-text3 uppercase tracking-wider">
@@ -30,6 +30,7 @@
                     </div>
                 </div>
             </div>
+            <TaskInspector></TaskInspector>
         </div>
     </div>
 </template>
@@ -40,6 +41,7 @@ import TaskRow from './TaskRow.vue';
 import TaskFilterSidebar from '../task-filter/TaskFilterSidebar.vue';
 import Plus from '@/icons/Plus.vue';
 import FilterIcon from '@/icons/FilterIcon.vue';
+import TaskInspector from '../task-inspector/TaskInspector.vue';
 
 const tasks = ref([
     {
