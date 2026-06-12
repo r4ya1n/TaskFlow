@@ -15,7 +15,7 @@
         <div class="flex">
             <TaskFilterSidebar></TaskFilterSidebar>
             <div ref="tasksContainer" class="@container/tasks flex flex-1">
-                <div class="@3xl/tasks:px-6 flex-col gap-2 px-3 py-5">
+                <div class="@3xl/tasks:px-6 w-full flex-col gap-2 px-3 py-5">
                     <!-- TaskRowHeader -->
                     <div
                         class="@3xl/tasks:grid hidden grid-cols-6 px-4 mb-1 text-xs font-medium text-text3 uppercase tracking-wider">
@@ -26,78 +26,30 @@
                         <div>Дедлайн</div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <TaskRow v-for="(task, i) in displayTasks" :task="task" :idx="i" :key="task.name"></TaskRow>
+                        <TaskRow v-for="(task, i) in displayTasks" :task="task" :idx="i" :key="task.id"></TaskRow>
                     </div>
                 </div>
             </div>
-            <TaskInspector></TaskInspector>
+            <!-- <TaskInspector></TaskInspector> -->
         </div>
     </div>
 </template>
 
 <script setup>
 import { computed, onMounted, onUnmounted, provide, reactive, ref } from 'vue';
+import axios from 'axios';
 import TaskRow from './TaskRow.vue';
 import TaskFilterSidebar from '../task-filter/TaskFilterSidebar.vue';
 import Plus from '@/icons/Plus.vue';
 import FilterIcon from '@/icons/FilterIcon.vue';
 import TaskInspector from '../task-inspector/TaskInspector.vue';
 
-const tasks = ref([
-    {
-        name: "Реализация авторизации через JWT",
-        tags: ["Backend", "Testing"],
-        status: "done",
-        old_status: "",
-        executor: "Иван Петров",
-        priority: "high",
-        deadline: "28 мая",
-        isDone: true
-    },
-    {
-        name: "Верстка страницы профиля пользователя",
-        tags: ["Frontend", "Design"],
-        status: "review",
-        old_status: "",
-        executor: "Алексей Коротких",
-        priority: "medium",
-        deadline: "25 мая",
-        isDone: false
-    },
-    {
-        name: "Настройка CI/CD пайплайна",
-        tags: ["DevOps"],
-        status: "todo",
-        old_status: "",
-        executor: "Мария Смирнова",
-        priority: "urgent",
-        deadline: "5 июня",
-        isDone: false
-    },
-    {
-        name: "Проверка кроссбраузерности интерфейса",
-        tags: ["Testing", "Frontend"],
-        status: "in_progress",
-        old_status: "",
-        executor: "Дмитрий Иванов",
-        priority: "medium",
-        deadline: "23 мая",
-        isDone: false
-    },
-    {
-        name: "Редизайн системы компонентов",
-        tags: ["Design", "Frontend"],
-        status: "todo",
-        old_status: "",
-        executor: "Екатерина Волкова",
-        priority: "low",
-        deadline: "10 июня",
-        isDone: false
-    }
-])
 
-provide("tasks", tasks)
+onMounted(() => {
+    getTasks()
+})
 
+const tasks = ref([])
 const taskFilter = reactive({
     name: '',
     description: '',
@@ -105,13 +57,10 @@ const taskFilter = reactive({
     priority: '',
     tags: []
 })
-provide("taskFilter", taskFilter)
-
 const filterIsOpen = ref(true)
-provide("filterIsOpen", filterIsOpen)
 
 const displayTasks = computed(() => tasks.value.filter(task => {
-    if (!task.name.toLowerCase().includes(taskFilter.name.toLowerCase())) {
+    if (!task.title.toLowerCase().includes(taskFilter.name.toLowerCase())) {
         return false
     }
     if (taskFilter.status && task.status.toLowerCase() !== taskFilter.status.toLowerCase()) {
@@ -126,28 +75,17 @@ const displayTasks = computed(() => tasks.value.filter(task => {
     return true
 }))
 
-const tasksContainer = ref(null)
-let resizeObserver = null
-let isFirst = true
+provide("tasks", tasks)
+provide("taskFilter", taskFilter)
+provide("filterIsOpen", filterIsOpen)
 
-onMounted(() => {
-    resizeObserver = new ResizeObserver(([entry]) => {
-        const width = entry.contentRect.width
-        // @lg = 1024px
-        if (isFirst && width < 512) {
-            filterIsOpen.value = false
-            isFirst = false
-        }
+const getTasks = () => {
+    axios.get('/api/tasks').then(res => {
+        console.log(res.data)
+        tasks.value = res.data
     })
 
-    if (tasksContainer.value) {
-        resizeObserver.observe(tasksContainer.value)
-    }
-})
-
-onUnmounted(() => {
-    resizeObserver?.disconnect()
-})
+}
 
 </script>
 

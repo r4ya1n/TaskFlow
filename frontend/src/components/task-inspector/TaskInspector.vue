@@ -6,7 +6,7 @@
                 <CloseIcon class="w-3 h-3 text-text2"></CloseIcon>
             </div>
             <div class="flex items-center gap-3 mt-1">
-                <TaskTagPill v-for="tag in task.tags" :key="tag" :tag="tag"></TaskTagPill>
+                <!-- <TaskTagPill v-for="tag in task.tags" :key="tag" :tag="tag"></TaskTagPill> -->
             </div>
         </header>
         <div class="px-5">
@@ -36,7 +36,6 @@
 
 <script setup>
 import CloseIcon from '@/icons/CloseIcon.vue';
-import TaskTagPill from '../task/TaskTagPill.vue';
 import DetailCard from './DetailCard.vue';
 
 const task = {
