@@ -19,7 +19,7 @@ export const COLORS = {
     main: "#565860",
     transparent: "rgba(86, 88, 96, 0.15)",
   },
-  purple: {
+  pink: {
     main: "#F472B6",
     transparent: "rgba(244, 114, 182, 0.15)",
   },
