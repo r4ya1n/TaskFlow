@@ -5,9 +5,9 @@
             <h3 class="text-text3 text-sm uppercase animation-text">ТЕГИ</h3>
             <div class="flex items-center flex-wrap gap-3">
                 <SmallPill
-                v-for="tag in TASK_TAGS" :key="tag.label"
+                v-for="tag in tags" :key="tag.id"
                 :label="tag.label"
-                :text-color="tag.textColor",
+                :text-color="getTagBgColor(tag.label)"
                 :bg-color="tag.bgColor"
                 class="cursor-pointer"
                 @click="toggleTag(tag.label)"
@@ -15,29 +15,32 @@
             </div>
         </div>
         <!-- Остальное -->
-        <TaskFilterOptions v-for="option in filterOptions" :option="option" :key="option.title"></TaskFilterOptions>
+        <TaskFilterOptions :title="Приоритет" :filter_by="priority" :options="TASK_PRIORITY_UI"></TaskFilterOptions>
     </div>
 </template>
 
 <script setup>
-import { TASK_TAGS } from '@/constants/taskTagsMeta';
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
 import TaskFilterOptions from './TaskFilterOption.vue';
-import { TASK_STATUS } from '@/constants/taskStatusMeta';
-import { TASK_PRIORITY } from '@/constants/taskPriorityMeta';
 import { inject } from 'vue';
 import SmallPill from '../pills/SmallPill.vue';
+import { TASK_PRIORITY_UI } from '@/ui/taskPriorityUI.js';
+import { getTagBgColor } from '@/utils/tagColor.js';
 
+
+onMounted(() => {
+    getTags()
+})
+
+const tags = ref([])
 const taskFilter = inject("taskFilter")
 
-const filterOptions = [{
-    title: "Статус",
-    engTitle: "status",
-    items: TASK_STATUS
-}, {
-    title: "Приоритет",
-    engTitle: "priority",
-    items: TASK_PRIORITY
-}]
+const getTags = () => {
+    axios.get("/api/tags").then(res => {
+        tags.value = res.data
+    })
+}
 
 const toggleTag = function (tag) {
     const index = taskFilter.tags.indexOf(tag);

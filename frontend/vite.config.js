@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -11,6 +12,7 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     tailwindcss(),
+    react(),
   ],
   base: "/TaskFlow/",
   resolve: {
@@ -18,4 +20,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 })

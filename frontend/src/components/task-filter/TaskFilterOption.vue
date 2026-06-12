@@ -1,25 +1,25 @@
 <template>
     <div>
         <h3 class="text-sm text-text3 mb-2 uppercase animation-text">
-            {{ option.title }}
+            {{ title }}
         </h3>
         <div class="flex flex-col gap-1">
             <FilterRow
             label="Все" :icon="DottedCircle" :icon-color="COLORS.accent"
-            @click="taskFilter[option.engTitle] = ''"
+            @click="taskFilter[filter_by] = ''"
             :class="[
-            taskFilter[option.engTitle] === ''
+            taskFilter[filter_by] === ''
             ? 'text-accent2 bg-accent2-bg'
             : 'text-text2 hover:text-text hover:bg-bg3']"
             ></FilterRow>
             <FilterRow
-            v-for="item in Object.values(option.items)" :key="item.label"
+            v-for="item in items" :key="item.label"
             :label="item.label" :icon="item.icon" :icon-color="item.textColor"
             :class="[
-            taskFilter[option.engTitle] === item.engLabel
+            taskFilter[filter_by] === item.key
             ? 'text-accent2 bg-accent2-bg'
             : 'text-text2 hover:text-text hover:bg-bg3']"
-            @click="taskFilter[item.group] = item.engLabel"
+            @click="taskFilter[filter_by] = item.key"
             ></FilterRow>
         </div>
     </div>
@@ -31,13 +31,25 @@ import { COLORS } from '@/constants/colors';
 import { inject } from 'vue';
 import FilterRow from './FilterRow.vue';
 
-const { option } = defineProps({
-    option: {
+const { title, filter_by, options } = defineProps({
+    title: {
+        type: String,
+        required: true
+    },
+    filter_by: {
+        type: String,
+        required: true
+    },
+    options: {
         type: Object,
         required: true
     }
 })
 
+const items = Object.entries(options).map(([key, value]) => ({
+  key,
+  ...value
+}))
 const taskFilter = inject("taskFilter")
 
 </script>
