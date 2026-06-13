@@ -1,9 +1,21 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 from .models import CustomUser
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
+    def validate(self, attrs):
+        user = authenticate(
+            username=attrs.get("email"),
+            password=attrs.get("password")
+        )
+        if not user:
+            raise serializers.ValidationError("Invalid credentials")
+
+        attrs["user"] = user
+        return attrs
+    
     
 class MeSerializer(serializers.ModelSerializer):
     class Meta:
