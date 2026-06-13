@@ -17,9 +17,14 @@ const refreshAuth = async (failedRequest: any) => {
     clearTokens()
     return Promise.reject()
   }
-  const { data } = await axios.post('/api/auth/token/refresh/', { refresh })
-  localStorage.setItem('access', data.access)
-  failedRequest.response.config.headers.Authorization = `Bearer ${data.access}`
+  try {
+    const { data } = await axios.post('/api/auth/token/refresh/', { refresh })
+    localStorage.setItem('access', data.access)
+    failedRequest.response.config.headers.Authorization = `Bearer ${data.access}`
+  } catch {
+    clearTokens()
+    return Promise.reject()
+  }
 }
 
 createAuthRefreshInterceptor(http, refreshAuth)

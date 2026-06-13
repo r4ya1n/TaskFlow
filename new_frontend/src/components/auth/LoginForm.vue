@@ -1,8 +1,10 @@
 <template>
     <div class="font-semibold">
         <div class="flex items-center cursor-pointer">
-            <RouterLink to="/login" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">Вход</RouterLink>
-            <RouterLink to="/register" class="flex-1 text-center py-3 border-b border-border text-text2">Регестрация</RouterLink>
+            <RouterLink to="/login" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">Вход
+            </RouterLink>
+            <RouterLink to="/register" class="flex-1 text-center py-3 border-b border-border text-text2">Регестрация
+            </RouterLink>
         </div>
         <div class="mb-4">
             <h2 class="text-2xl text-center pt-4 pb-1">
@@ -12,7 +14,7 @@
                 Войдите в своей аккаунт
             </p>
         </div>
-        <form class="flex flex-col gap-2 mb-4">
+        <form @keypress.enter="onSubmit()" class="flex flex-col gap-2 mb-4">
             <FormField title="Email">
                 <BaseInput @focus="errors.email = false" :class="errors.email ? 'border-red hover:border-red' : ''"
                     v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com">
@@ -37,9 +39,9 @@ import { login } from '@/api/auth.api';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import FormField from '@/components/ui/FormField.vue';
-import type { ApiResponse } from '@/types/auth';
+import type { ApiResponse, ValidationError } from '@/types/auth';
 import { reactive } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
 const form = reactive({
     email: "",
@@ -51,6 +53,7 @@ const errors = reactive({
     password: false
 })
 
+const router = useRouter()
 
 const onSubmit = async () => {
     errors.email = !form.email
@@ -60,7 +63,22 @@ const onSubmit = async () => {
             email: form.email,
             password: form.password
         })
-        console.log(response);
+        if (response.success) {
+            router.push('/tasks')
+        }
+        if (response.errors) {
+            console.log(response.errors);
+
+            const responseErrors: ValidationError[] = response.errors
+            responseErrors.forEach((error) => {
+                if (error.field === 'email') {
+                    errors.email = true
+                }
+                if (error.field === 'password') {
+                    errors.password = true
+                }
+            })
+        }
     }
 }
 

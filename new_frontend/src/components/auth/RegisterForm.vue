@@ -2,7 +2,7 @@
     <div class="font-semibold">
         <div class="flex items-center cursor-pointer">
             <RouterLink to="/login" class="flex-1 text-center py-3 border-b border-border text-text2">Вход</RouterLink>
-            <RouterLink to="/register" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">Регестрация</RouterLink>
+            <RouterLink to="/register" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">Регистрация</RouterLink>
         </div>
         <div class="mb-4">
             <h2 class="text-2xl text-center pt-4 pb-1">
@@ -12,7 +12,7 @@
                 Создайте новый аккаунт
             </p>
         </div>
-        <form class="flex flex-col gap-2 mb-4">
+        <form @keypress.enter="onSubmit()" class="flex flex-col gap-2 mb-4">
             <FormField title="Email">
                 <BaseInput @focus="errors.email = false" :class="errors.email ? 'border-red hover:border-red' : ''"
                     v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com">
@@ -25,11 +25,9 @@
             </FormField>
             <FormField title="Имя" annotation="опционально*">
                 <BaseInput v-model="form.firstname" placeholder="Иван" autocomplete="given-name"></BaseInput>
-                <!-- <p v-if="fullnameInfo.error" class="mt-1 text-xs text-red">{{ fullnameInfo.error }}</p> -->
             </FormField>
             <FormField title="Фамилия" annotation="опционально*">
                 <BaseInput v-model="form.lastname" placeholder="Иванов" autocomplete="family-name"></BaseInput>
-                <!-- <p v-if="fullnameInfo.error" class="mt-1 text-xs text-red">{{ fullnameInfo.error }}</p> -->
             </FormField>
             <FormField title="Пароль" hint="Минимум 8 символов, включая прописные буквы, цифры и специальные символы">
                 <BaseInput @focus="errors.password = false"
@@ -55,7 +53,7 @@ import { register } from '@/api/auth.api.ts';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import FormField from '@/components/ui/FormField.vue';
-import { reactive, computed } from 'vue';
+import { reactive } from 'vue';
 import type { ApiResponse, ValidationError } from '@/types/auth.ts';
 import { RouterLink } from 'vue-router';
 
@@ -74,23 +72,22 @@ const errors = reactive({
     username: false
 })
 
-const passwordsMatch = computed(() => {
-    return form.password === form.passwordConfirm
-})
-
 const onSubmit = async () => {
     errors.email = !form.email
     errors.username = !form.username
-    errors.password = !form.password || !form.passwordConfirm || !passwordsMatch.value
+    errors.password = !form.password || form.password !== form.passwordConfirm 
+    console.log(form);
     if (!errors.email && !errors.username && !errors.password) {
         const response: ApiResponse = await register({
             email: form.email,
             username: form.username,
-            firstName: form.firstname,
-            lastName: form.lastname,
+            first_name: form.firstname,
+            last_name: form.lastname,
             password: form.password
         })
         if (response.errors) {
+            console.log(response.errors);
+            
             const responseErrors: ValidationError[] = response.errors
             responseErrors.forEach((error) => {
                 if (error.field === 'email') {

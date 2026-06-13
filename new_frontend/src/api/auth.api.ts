@@ -1,7 +1,6 @@
 import { http, setTokens, clearTokens } from './http'
 import type { ApiResponse, User } from '@/types/auth'
 import { parseValidationErrors } from '@/utils/parseValidationData'
-import type { AxiosResponse } from 'axios'
 
 export interface LoginPayload {
   email: string
@@ -12,8 +11,8 @@ export interface RegisterPayload {
   email: string
   username: string
   password: string
-  firstName?: string
-  lastName?: string
+  first_name?: string
+  last_name?: string
 }
 
 export const login = async (data: LoginPayload): Promise<ApiResponse> => {
@@ -24,8 +23,10 @@ export const login = async (data: LoginPayload): Promise<ApiResponse> => {
     })
     .catch((err) => {
       if (!err.response) return { success: false, message: 'Network Error' }
-      if (err.response.status === 400) {
-        return { success: false, message: 'Bad Request', errors: err.response.data }
+      const status: number = err.response.status
+      const data = err.response.data
+      if (status === 400) {
+        return { success: false, message: 'Bad Request', errors: parseValidationErrors(data) }
       }
       return { success: false, message: 'Internal Server Error' }
     })
@@ -68,12 +69,11 @@ export const register = async (data: RegisterPayload): Promise<ApiResponse> => {
 export const logout = async (): Promise<void> => {
   const refresh = localStorage.getItem('refresh')
   if (refresh) {
-    await http.post('/auth/logout/', { refresh }).catch(() => {})
+    await http.post('/auth/logout/', { refresh }).catch(() => { })
   }
   clearTokens()
 }
 
 export const me = async (): Promise<User> => {
-  const res: AxiosResponse<User> = await http.get('/auth/me/')
-  return res.data
+  return http.get('/auth/me/').then((res) => res.data)
 }
