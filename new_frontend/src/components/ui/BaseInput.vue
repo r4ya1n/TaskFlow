@@ -1,12 +1,7 @@
 <template>
     <input
-        class="p-2 min-w-full bg-bg3 text-text3 border border-border rounded-md cursor-text hover:border-border2 focus:outline-none focus:border-accent"
-        :type="type"
-        :placeholder="placeholder"
-        :value="modelValue"
-        @input="onInput"
-        v-bind="$attrs"
-    />
+        class="p-2 w-full bg-bg3 text-text3 rounded-md cursor-text border border-border hover:border-border2 focus:outline-none focus:border-accent"
+        :type="type" :placeholder="placeholder" :value="modelValue" @input="onInput" v-bind="$attrs" />
 </template>
 
 <script setup lang="ts">

@@ -7,19 +7,20 @@
             </h2>
             <nav class="flex flex-col gap-2">
                 <NavGroup title="Главная">
-                    <NavItem to="/" label="Дашборд" :icon="IconLayoutDashboard"></NavItem>
-                    <NavItem to="/tasks" label="Мои задачи" :icon="IconChecklist"></NavItem>
-                    <NavItem to="/" label="Календарь" :icon="IconCalendarEvent"></NavItem>
+                    <NavItem to="/" label="Дашборд" :icon="IconLayoutDashboard" />
+                    <NavItem to="/tasks" label="Мои задачи" :icon="IconChecklist" />
+                    <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-
+                    <ProjectItem v-for="prj in display_projects" :label="prj"></ProjectItem>
+                    <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
         </div>
         <div class="flex items-center justify-between py-4 gap-2 border-t border-border">
             <div class="flex items-center gap-2">
-                <Avatar :user="user"></Avatar>
-                <div class="test-xs">{{ displayFullname }}</div>
+                <Avatar :user="user.user"></Avatar>
+                <div class="test-xs">{{ displayShortUsername(user.user) }}</div>
             </div>
             <div class="flex items-center gap-1">
                 <IconSettings class="text-text2" size="24"></IconSettings>
@@ -34,41 +35,41 @@ import Logo from '@/icons/Logo.vue';
 import NavItem from './NavItem.vue';
 import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
 import NavGroup from './NavGroup.vue';
-import { computed, onMounted, ref } from 'vue';
-import { logout, me } from '@/api/auth.api.ts';
-import type { User } from '@/types/auth.ts';
+import { computed, inject, onMounted, ref } from 'vue';
 import Avatar from '../ui/Avatar.vue';
-import { capitalizeText } from '@/utils/capitalizeText.ts';
 import { useRouter } from 'vue-router';
+import type { UserProject } from '@/types/project.ts';
+import { getMyProjects } from '@/api/project.api.ts';
+import BaseAddButton from '../ui/BaseAddButton.vue';
+import ProjectItem from './ProjectItem.vue';
+import { displayShortUsername } from '@/utils/displayUsername.ts';
+import { useUserStore } from '@/stores/user.ts';
 
 onMounted(async () => {
-    user.value = await me()
-    console.log(user.value)
+    projects.value = await getMyProjects()
 })
 
-const user = ref<User | null>(null)
 
-const displayFullname = computed(() => {
-    if (user.value) {
-        console.log(user);
-        
-        const firstname = user.value.first_name
-        const lastname = user.value.last_name
-        const username = user.value.username
-        
-        if (firstname && lastname) {
-            return capitalizeText(firstname) + " " + lastname[0].toUpperCase() + '.'
-        }
-        return username
+const projects = ref<UserProject[] | null>(null)
+const user = useUserStore()
+
+
+const display_projects = computed(() => {
+    if (projects.value) {
+        return projects.value.map((prj) => prj.title)
     }
-    return ""
+    return []
 })
 
+const createProjectIsOpen = inject("createProjectIsOpen")
 
 const router = useRouter()
 const onLogout = async () => {
-    await logout()
-    router.push('/login')
+    try {
+        await user.logout()
+    } finally {
+        router.push('/login')
+    }
 }
 
 </script>

@@ -4,7 +4,7 @@ export interface User {
   username: string
   first_name: string
   last_name: string
-  isVerified: boolean
+  isVerified?: boolean
 }
 
 export interface ApiResponse {

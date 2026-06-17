@@ -16,13 +16,13 @@
         </div>
         <form @keypress.enter="onSubmit()" class="flex flex-col gap-2 mb-4">
             <FormField title="Email">
-                <BaseInput @focus="errors.email = false" :class="errors.email ? 'border-red hover:border-red' : ''"
+                <BaseInput @focus="error = false" :class="error ? 'border-red hover:border-red' : ''"
                     v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com">
                 </BaseInput>
             </FormField>
             <FormField title="Пароль">
-                <BaseInput @focus="errors.password = false"
-                    :class="errors.password ? 'border-red hover:border-red' : ''" v-model="form.password"
+                <BaseInput @focus="error = false"
+                    :class="error ? 'border-red hover:border-red' : ''" v-model="form.password"
                     type="password" autocomplete="current-password" placeholder="************"></BaseInput>
             </FormField>
         </form>
@@ -35,49 +35,38 @@
 </template>
 
 <script setup lang="ts">
-import { login } from '@/api/auth.api';
-import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseButton from '@/components/ui/BaseSubmitButton.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import FormField from '@/components/ui/FormField.vue';
-import type { ApiResponse, ValidationError } from '@/types/auth';
-import { reactive } from 'vue';
+import axios from 'axios';
+import { reactive, ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+
+const user = useUserStore()
 
 const form = reactive({
     email: "",
     password: ""
 })
 
-const errors = reactive({
-    email: false,
-    password: false
-})
+const error = ref(false)
 
 const router = useRouter()
 
 const onSubmit = async () => {
-    errors.email = !form.email
-    errors.password = !form.password
-    if (!errors.email && !errors.email) {
-        const response: ApiResponse = await login({
-            email: form.email,
-            password: form.password
-        })
-        if (response.success) {
-            router.push('/tasks')
-        }
-        if (response.errors) {
-            console.log(response.errors);
-
-            const responseErrors: ValidationError[] = response.errors
-            responseErrors.forEach((error) => {
-                if (error.field === 'email') {
-                    errors.email = true
-                }
-                if (error.field === 'password') {
-                    errors.password = true
-                }
+    error.value = !form.email || !form.password
+    if (error) {
+        try {
+            await user.login({
+                email: form.email,
+                password: form.password
             })
+            router.push('/dashboard')
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                error.value = true
+            }
         }
     }
 }

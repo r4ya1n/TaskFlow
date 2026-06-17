@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -44,8 +45,9 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework_simplejwt.token_blacklist",
     'django_filters',
-    'user',
+    'account',
     'task',
+    'project'
 ]
 
 REST_FRAMEWORK = {
@@ -59,6 +61,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     "BLACKLIST_AFTER_ROTATION": True,
 }
 
@@ -140,7 +143,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-AUTH_USER_MODEL = 'user.CustomUser'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
