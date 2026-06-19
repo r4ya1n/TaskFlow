@@ -12,7 +12,7 @@
                     <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-                    <ProjectItem v-for="prj in projects.projects" :label="prj.title"></ProjectItem>
+                    <ProjectItem v-for="prj in projects.projects" @click="projects.selectedProject = prj" :key="prj.id" :project="prj"></ProjectItem>
                     <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
