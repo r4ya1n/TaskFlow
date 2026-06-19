@@ -23,7 +23,6 @@ const refreshAuth = async (failedRequest: any) => {
     failedRequest.response.config.headers['Authorization'] = `Bearer ${userStore.token}`
     return Promise.resolve()
   } catch (error) {
-    console.log("Refresh failed");
     await userStore.logout()
     return Promise.reject(error)
   }

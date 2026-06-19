@@ -14,7 +14,7 @@ onMounted(() => {
     
 })
 
-const createProjectIsOpen = ref(false)
+const createProjectIsOpen = ref<boolean>(false)
 
 provide('createProjectIsOpen', createProjectIsOpen)
 

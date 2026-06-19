@@ -12,7 +12,7 @@
                     <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-                    <ProjectItem v-for="prj in display_projects" :label="prj"></ProjectItem>
+                    <ProjectItem v-for="prj in projects.projects" :label="prj.title"></ProjectItem>
                     <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
@@ -35,31 +35,21 @@ import Logo from '@/icons/Logo.vue';
 import NavItem from './NavItem.vue';
 import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
 import NavGroup from './NavGroup.vue';
-import { computed, inject, onMounted, ref } from 'vue';
+import { inject, onMounted } from 'vue';
 import Avatar from '../ui/Avatar.vue';
 import { useRouter } from 'vue-router';
-import type { UserProject } from '@/types/project.ts';
-import { getMyProjects } from '@/api/project.api.ts';
 import BaseAddButton from '../ui/BaseAddButton.vue';
 import ProjectItem from './ProjectItem.vue';
 import { displayShortUsername } from '@/utils/displayUsername.ts';
 import { useUserStore } from '@/stores/user.ts';
+import { useProjectsStore } from '@/stores/projects.ts';
 
 onMounted(async () => {
-    projects.value = await getMyProjects()
+    await projects.fetchProjects();
 })
 
-
-const projects = ref<UserProject[] | null>(null)
+const projects = useProjectsStore();
 const user = useUserStore()
-
-
-const display_projects = computed(() => {
-    if (projects.value) {
-        return projects.value.map((prj) => prj.title)
-    }
-    return []
-})
 
 const createProjectIsOpen = inject("createProjectIsOpen")
 

@@ -44,27 +44,29 @@ import BaseModal from '../ui/BaseModal.vue'
 import BaseActionButton from '../ui/BaseActionButton.vue';
 import CreateProjectStepGeneral from './CreateProjectStepGeneral.vue';
 import CreateProjectStepMembers from './CreateProjectStepMembers.vue';
-import { inject, provide, reactive, ref } from 'vue';
+import { inject, provide, reactive, ref, type Ref } from 'vue';
 import StepNumber from './StepNumber.vue';
 import type { CreateProjectForm } from '@/types/project.ts';
-import { postProject } from '@/api/project.api.ts';
+import { useProjectsStore } from '@/stores/projects.ts';
 
 
 const step = ref<number>(1)
 const stepsCount = 2
 
+const projects = useProjectsStore()
 const form = reactive<CreateProjectForm>({
     title: '',
     type: 'PUBLIC',
     members: []
 })
 
-const createProjectIsOpen = inject('createProjectIsOpen')
+const createProjectIsOpen = inject<Ref<boolean>>('createProjectIsOpen')!
 provide("createProjectForm", form)
 
 async function createProject() {
     if (form.title) {
-        postProject(form)
+        createProjectIsOpen.value = false
+        await projects.postProject(form)
     }
 }
 
