@@ -36,7 +36,7 @@ class Membership(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='memberships')
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.MEMBER)
 
     def __str__(self):

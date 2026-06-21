@@ -1,13 +1,29 @@
 from rest_framework import serializers
 from .models import Project, Membership, User, Role
 
-class UserProjectSerializer(serializers.ModelSerializer):
-    project_id = serializers.IntegerField(source='project.id')
-    title = serializers.CharField(source='project.title')
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'username', 'first_name', 'last_name']
+
+class ProjectMemberSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     
     class Meta:
         model = Membership
-        fields = ['project_id', 'title', 'role']
+        fields = ['user', 'role']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    members = ProjectMemberSerializer(source='memberships', many=True, read_only=True)
+    
+    class Meta:
+        model = Project
+        fields = ['id', 'title', 'members']
+        
+class ProjectShortSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Project
+        fields = ['id', 'title']
 
 class MembershipInputSerializer(serializers.Serializer):
     user_email = serializers.EmailField()
