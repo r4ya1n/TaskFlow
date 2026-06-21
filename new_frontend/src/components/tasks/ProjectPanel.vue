@@ -1,8 +1,8 @@
 <template>
-    <div class="px-4 py-6 border-r border-border w-55">
+    <div class="px-4 py-6 border-r border-border w-fit">
         <div class="">
             <div class="mb-3">
-                <div class="flex items-center justify-between text-2xl font-semibold">
+                <div class="flex items-center justify-between gap-5 text-2xl font-semibold">
                     <div>{{ project?.title }}</div>
                     <IconSettings class="text-text3 cursor-pointer" size="20" stroke="1" />
                 </div>

@@ -9,7 +9,7 @@ export interface UserProject {
     title: string
 }
 export interface Project extends UserProject {
-    members: Member[]
+    members: number[]
 }
 
 export interface CreateProjectForm {

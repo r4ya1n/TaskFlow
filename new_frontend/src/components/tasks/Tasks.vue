@@ -3,21 +3,22 @@
         <CreateProject v-if="createProjectIsOpen"></CreateProject>
         <div class="flex">
             <Sidebar />
-            <ProjectPanel v-if="activeProject" />
+            <ProjectPanel v-if="projectStore.project" />
+            <TaskList v-if="projectStore.project" class="flex-1" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue';
+import { provide, ref } from 'vue';
 import CreateProject from '../project/CreateProject.vue';
 import Sidebar from '../sidebar/Sidebar.vue';
 import ProjectPanel from './ProjectPanel.vue';
 import { useProjectStore } from '@/stores/project.ts';
+import TaskList from './TaskList.vue';
 
 const createProjectIsOpen = ref<boolean>(false);
 const projectStore = useProjectStore();
-const activeProject = computed(() => projectStore.project)
 
 provide('createProjectIsOpen', createProjectIsOpen)
 

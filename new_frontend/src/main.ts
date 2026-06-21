@@ -7,6 +7,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 // Fonts
 import "@fontsource-variable/onest";
+import "@fontsource/jetbrains-mono";
 
 // Plugins
 const pinia = createPinia()

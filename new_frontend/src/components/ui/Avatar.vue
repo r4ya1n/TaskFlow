@@ -1,5 +1,5 @@
 <template>
-    <div class="w-9 h-9 text-base rounded-full text-accent2 bg-accent/15 flex items-center justify-center">
+    <div class="min-w-8 min-h-8 text-sm rounded-full text-accent2 bg-accent/15 flex items-center justify-center">
         {{ displayUser }}
     </div>
 </template>

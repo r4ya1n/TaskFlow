@@ -3,6 +3,7 @@
 @theme {
 
     --font-sans: "Onest", "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
     /* Colors */
     --color-bg1: #0E0F11;
@@ -24,8 +25,8 @@
     --color-accent2: #A99DFD;
     --color-blue: #4A90E8;
     --color-teal: #1CC7A0;
-    --color-amber: #F0A040;
-    --color-pink: #F472B6;
+    --color-amber: #C9904F;
+    --color-pink: #C77DA0;
     --color-red: #E05252;
     --color-gray: #565860;
 }
