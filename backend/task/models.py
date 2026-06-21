@@ -22,7 +22,7 @@ class Tag(models.Model):
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
     description = models.TextField()
     status = models.CharField(
         max_length=20,
@@ -34,9 +34,12 @@ class Task(models.Model):
         choices=Priority.choices,
         default=Priority.MEDIUM.value
     )
+    executor = models.ForeignKey("project.Membership", on_delete=models.SET_NULL, null=True, related_name="executor")
+    author = models.ForeignKey("project.Membership", on_delete=models.SET_NULL, null=True, related_name="author")
     deadline = models.DateTimeField()
-    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
-
+    
+    project = models.ForeignKey("project.Project", on_delete=models.CASCADE, related_name="project")
+    created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
 

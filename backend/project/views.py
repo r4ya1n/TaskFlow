@@ -3,8 +3,6 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Project
 from .serializers import ProjectCreateSerializer, ProjectShortSerializer, ProjectSerializer
 
-
-
 class ProjectViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Project.objects.all()
