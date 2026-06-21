@@ -58,11 +58,12 @@ export const useUserStore = defineStore('user', () => {
         { skipAuthRefresh: true } as AxiosAuthRefreshRequestConfig
       )
     } finally {
+      console.log('mice');
+      
       user.value = null
       token.value = null
       refreshToken.value = null
     }
-
   }
 
   return { user, token, refreshToken, isAuthenticated, fetchUser, refreshTokenAction, register, login, logout }

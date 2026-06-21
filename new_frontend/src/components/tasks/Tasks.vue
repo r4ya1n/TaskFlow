@@ -1,18 +1,19 @@
 <template>
     <div class="min-h-screen w-full bg-bg1 text-text font-sans font-medium">
-        <Sidebar></Sidebar>
         <CreateProject v-if="createProjectIsOpen"></CreateProject>
+        <div class="flex">
+            <Sidebar></Sidebar>
+            <div class="flex-1">
+                
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, provide, ref } from 'vue';
+import { provide, ref } from 'vue';
 import CreateProject from '../project/CreateProject.vue';
 import Sidebar from '../sidebar/Sidebar.vue';
-
-onMounted(() => {
-    
-})
 
 const createProjectIsOpen = ref<boolean>(false)
 

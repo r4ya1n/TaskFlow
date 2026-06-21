@@ -7,14 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { useProjectsStore } from '@/stores/projects.ts';
+import { useListProjectsStore } from '@/stores/project_list.ts';
 import BaseListItem from '../ui/BaseListItem.vue';
 import ProjectIcon from '../ui/ProjectIcon.vue';
 import { computed } from 'vue';
 import type { UserProject } from '@/types/project.ts';
 
 const { project } = defineProps<{ project:UserProject }>()
-const projects = useProjectsStore()
+const projects = useListProjectsStore()
 
 const isSelected = computed<boolean>(() => {
     if (!projects.selectedProject) {

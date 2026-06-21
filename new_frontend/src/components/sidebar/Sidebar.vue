@@ -12,7 +12,7 @@
                     <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-                    <ProjectItem v-for="prj in projects.projects" @click="projects.selectedProject = prj" :key="prj.id" :project="prj"></ProjectItem>
+                    <ProjectItem v-for="prj in projects.projects" @click="" :key="prj.id" :project="prj"></ProjectItem>
                     <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
@@ -42,13 +42,13 @@ import BaseAddButton from '../ui/BaseAddButton.vue';
 import ProjectItem from './ProjectItem.vue';
 import { displayShortUsername } from '@/utils/displayUsername.ts';
 import { useUserStore } from '@/stores/user.ts';
-import { useProjectsStore } from '@/stores/projects.ts';
+import { useListProjectsStore } from '@/stores/project_list.ts';
 
 onMounted(async () => {
     await projects.fetchProjects();
 })
 
-const projects = useProjectsStore();
+const projects = useListProjectsStore();
 const user = useUserStore()
 
 const createProjectIsOpen = inject("createProjectIsOpen")

@@ -47,13 +47,13 @@ import CreateProjectStepMembers from './CreateProjectStepMembers.vue';
 import { inject, provide, reactive, ref, type Ref } from 'vue';
 import StepNumber from './StepNumber.vue';
 import type { CreateProjectForm } from '@/types/project.ts';
-import { useProjectsStore } from '@/stores/projects.ts';
+import { useListProjectsStore } from '@/stores/project_list.ts';
 
 
 const step = ref<number>(1)
 const stepsCount = 2
 
-const projects = useProjectsStore()
+const projects = useListProjectsStore()
 const form = reactive<CreateProjectForm>({
     title: '',
     type: 'PUBLIC',

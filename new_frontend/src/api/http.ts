@@ -18,8 +18,7 @@ http.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 const refreshAuth = async (failedRequest: any) => {
   const userStore = useUserStore()
   try {
-    const res = await userStore.refreshTokenAction()
-    console.log(res);
+    await userStore.refreshTokenAction()
     failedRequest.response.config.headers['Authorization'] = `Bearer ${userStore.token}`
     return Promise.resolve()
   } catch (error) {

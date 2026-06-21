@@ -3,7 +3,7 @@ import type { CreateProjectForm, UserProject } from "@/types/project"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
-export const useProjectsStore = defineStore('projects', () => {
+export const useListProjectsStore = defineStore('projects', () => {
     const projects = ref<UserProject[]>([])
     const selectedProject = ref<UserProject | null>(null)
 

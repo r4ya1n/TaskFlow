@@ -9,11 +9,16 @@ export interface UserProject {
     title: string,
     role: Role
 }
-export interface Member extends User {
-    role: Role
+export interface Project extends UserProject {
+    members: Member[]
 }
+
+
 export interface CreateProjectForm {
     title: string,
     type: ProjectType,
     members: Member[]
+}
+export interface Member extends User {
+    role: Role
 }
