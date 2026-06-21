@@ -1,5 +1,5 @@
 <template>
-    <BaseListItem :label="project.title" :class="isSelected ? 'text-text!' : ''">
+    <BaseListItem :label="project.title" :class="isActive ? 'text-text!' : ''">
         <template #icon>
             <ProjectIcon :label="project.title"></ProjectIcon>
         </template>
@@ -7,20 +7,20 @@
 </template>
 
 <script setup lang="ts">
-import { useListProjectsStore } from '@/stores/project_list.ts';
 import BaseListItem from '../ui/BaseListItem.vue';
 import ProjectIcon from '../ui/ProjectIcon.vue';
-import { computed } from 'vue';
 import type { UserProject } from '@/types/project.ts';
+import { useProjectStore } from '@/stores/project.ts';
+import { computed } from 'vue';
 
 const { project } = defineProps<{ project:UserProject }>()
-const projects = useListProjectsStore()
+const projectStore = useProjectStore()
 
-const isSelected = computed<boolean>(() => {
-    if (!projects.selectedProject) {
+const isActive = computed(() => {
+    if (!projectStore.project) {
         return false
     }
-    return projects.selectedProject.id === project.id
+    return projectStore.project.id === project.id
 })
 
 </script>

@@ -6,13 +6,11 @@ export type Role = "MEMBER" | "ADMIN" | "OWNER"
 
 export interface UserProject {
     id: number,
-    title: string,
-    role: Role
+    title: string
 }
 export interface Project extends UserProject {
     members: Member[]
 }
-
 
 export interface CreateProjectForm {
     title: string,

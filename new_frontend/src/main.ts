@@ -8,6 +8,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 // Fonts
 import "@fontsource-variable/onest";
 
+// Plugins
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 

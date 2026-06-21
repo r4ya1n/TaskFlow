@@ -5,14 +5,12 @@ import { ref } from "vue"
 
 export const useListProjectsStore = defineStore('projects', () => {
     const projects = ref<UserProject[]>([])
-    const selectedProject = ref<UserProject | null>(null)
 
     const fetchProjects = async (): Promise<void> => {
-        const response = await http.get('/project/my/')
-        projects.value = response.data.map((raw: any): UserProject => ({
-            id: raw.project_id,
-            title: raw.title,
-            role: raw.role
+        const response = await http.get('/project/')
+        projects.value = response.data.results.map((raw: any): UserProject => ({
+            id: raw.id,
+            title: raw.title
         }))
     }
 
@@ -28,5 +26,5 @@ export const useListProjectsStore = defineStore('projects', () => {
         })
         await fetchProjects()
     }
-    return { projects,  selectedProject, fetchProjects, postProject }
+    return { projects, fetchProjects, postProject }
 })
