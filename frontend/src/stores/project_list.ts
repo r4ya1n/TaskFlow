@@ -1,14 +1,14 @@
 import { http } from "@/api/http"
-import type { CreateProjectForm, UserProject } from "@/types/project"
+import type { CreateProjectForm, ProjectListItem } from "@/types/project"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
 export const useListProjectsStore = defineStore('projects', () => {
-    const projects = ref<UserProject[]>([])
+    const projects = ref<ProjectListItem[]>([])
 
     const fetchProjects = async (): Promise<void> => {
         const response = await http.get('/project/')
-        projects.value = response.data.results.map((raw: any): UserProject => ({
+        projects.value = response.data.results.map((raw: any): ProjectListItem=> ({
             id: raw.id,
             title: raw.title
         }))

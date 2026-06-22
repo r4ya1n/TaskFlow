@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center gap-2 p-2 cursor-pointer rounded-lg hover:bg-bg3">
+    <div class="flex items-center gap-2 p-2 cursor-pointer rounded-lg">
         <slot name="icon"></slot>
         <div class="text-sm">{{ label }}</div>
     </div>

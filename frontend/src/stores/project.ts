@@ -7,6 +7,14 @@ export const useProjectStore = defineStore('project', () => {
     const project = ref<Project | null>(null)
     const activeProjectId = ref<number | null>(null)
     const membersById = ref<Record<number, Member>>({})
+    const tags = ref<string[] | null>(null)
+
+    const fetchTags = async () => {
+        if (!project) return
+
+        const { data } = await http(`/project/${activeProjectId.value}/tags/`)
+        tags.value = data.results.map((raw: any) => raw.name)
+    }
 
     const fetchProject = async () => {
         const { data } = await http.get(`/project/${activeProjectId.value}`)
@@ -31,8 +39,8 @@ export const useProjectStore = defineStore('project', () => {
 
     const selectProject = async (id: number) => {
         activeProjectId.value = id
-        await fetchProject()
+        await Promise.allSettled([fetchProject(), fetchTags()]) 
     }
 
-    return { project, membersById, fetchProject, selectProject }
+    return { project, membersById, tags, fetchProject, selectProject }
 })

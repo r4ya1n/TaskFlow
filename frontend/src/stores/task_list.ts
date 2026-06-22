@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { TaskListItem } from "@/types/task";
+import type { TaskFilter, TaskListItem } from "@/types/task";
 import { ref, watch } from "vue";
 import { http } from "@/api/http";
 import type { Member } from "@/types/project";
@@ -9,21 +9,24 @@ import { useProjectStore } from "./project";
 export const useTaskListStore = defineStore('tasks', () => {
     const projectStore = useProjectStore()
     const tasks = ref<TaskListItem[] | null>(null)
-    const tags = ref<string[] | null>(null)
-
-    const fetchTags = async () => {
-        if (!projectStore.project) return
-
-        const { data } = await http(`/project/${projectStore.project.id}/tags/`)
-        tags.value = data.results.map((raw: any) => raw.name)
-    }
+    const filter = ref<TaskFilter>({
+        title: "",
+        description: "",
+        tags: new Set(),
+        priority: "",
+        status: ""
+    })
 
     const fetchTasks = async () => {
         if (!projectStore.project) return
-
         const { data } = await http.get(`/task/`, {
             params: {
-                "project": projectStore.project?.id
+                project: projectStore.project?.id,
+                title: filter.value.title,
+                description: filter.value.description,
+                priority: filter.value.priority,
+                status: filter.value.status,
+                tags: [...filter.value.tags].join(',')
             }
         })
         const tags = (tags: any): string[] => tags.map((raw: any) => raw.name)
@@ -32,6 +35,7 @@ export const useTaskListStore = defineStore('tasks', () => {
         tasks.value = data.results.map((raw: any): TaskListItem => ({
             id: raw.id,
             title: raw.title,
+            desription: raw.desription,
             executor: executor(raw.executor_id),
             tags: tags(raw.tags),
             status: raw.status,
@@ -40,13 +44,13 @@ export const useTaskListStore = defineStore('tasks', () => {
         }))
     }
     watch(
-        () => projectStore.project?.id,
+        () => [projectStore.project?.id, filter.value.status, filter.value.priority],
         async (newId) => {
             if (!newId) return
-            await Promise.allSettled([fetchTasks(), fetchTags()])
-            
+            await fetchTasks()
+
         },
-        { immediate: true}
+        { immediate: true }
     )
-    return {tasks, tags, fetchTasks, fetchTags}
+    return { tasks, filter, fetchTasks }
 })
