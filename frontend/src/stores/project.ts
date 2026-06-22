@@ -17,7 +17,7 @@ export const useProjectStore = defineStore('project', () => {
     }
 
     const fetchProject = async () => {
-        const { data } = await http.get(`/project/${activeProjectId.value}`)
+        const { data } = await http.get(`/project/${activeProjectId.value}/`)
 
         const normalizedMembers: Record<number, Member> = {}
         data.members.forEach((raw: any) => {

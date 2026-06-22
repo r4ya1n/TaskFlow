@@ -19,7 +19,7 @@
         </div>
         <div class="flex items-center justify-between py-4 gap-2 border-t border-border">
             <div class="flex items-center gap-2">
-                <Avatar :user="user.user"></Avatar>
+                <Avatar class="size-9" :user="user.user"></Avatar>
                 <div class="test-xs">{{ displayShortUsername(user.user) }}</div>
             </div>
             <div class="flex items-center gap-1">
