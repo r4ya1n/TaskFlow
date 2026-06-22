@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[40px_10fr_3fr_5fr_3fr_3fr] items-center text-xs p-3 bg-bg2 border border-border rounded-xl
+    <div class="grid grid-cols-[40px_10fr_3fr_5fr_3fr_3fr] items-center gap-1 text-xs p-3 bg-bg2 border border-border rounded-xl
     hover:border-text5 cursor-pointer">
         <div class="size-6 rounded-md  cursor-pointer" :class="isDone ? 'bg-teal' : 'border border-border'">
             <IconCheck v-if="isDone"></IconCheck>
@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import type { TaskListItem } from '@/types/task';
-import Tag from './Tag.vue';
+import Tag from '../ui/Tag.vue';
 import Avatar from '../ui/Avatar.vue';
-import TaskPill from './TaskPill.vue';
+import TaskPill from '../ui/TaskPill.vue';
 import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
 import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
 import { displayShortUsername } from '@/utils/displayUsername.ts';

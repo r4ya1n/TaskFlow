@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-bg2 min-h-screen w-fit p-6 flex flex-col justify-between">
+    <div class="bg-bg2 h-screen w-fit p-6 flex flex-col justify-between">
         <div class="">
             <h2 class="flex items-center gap-2 cursor-pointer mb-6">
                 <Logo class="w-7 h-7"></Logo>

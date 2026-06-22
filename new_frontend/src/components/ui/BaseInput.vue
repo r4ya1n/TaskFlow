@@ -1,14 +1,24 @@
 <template>
-    <input
-        class="p-2 w-full bg-bg3 text-text3 rounded-md cursor-text border border-border hover:border-border2 focus:outline-none focus:border-accent"
-        :type="type" :placeholder="placeholder" :value="modelValue" @input="onInput" v-bind="$attrs" />
+    <div
+        class="flex items-center gap-2
+        p-2 w-full bg-bg3 text-text3 rounded-md cursor-text border border-border hover:border-border2 focus:border-accent">
+        <component :is="icon" size="20" class="shrink-0" />
+        <input class="focus:outline-none" :type="type" :placeholder="placeholder" :value="modelValue" @input="onInput"
+            v-bind="$attrs" />
+    </div>
+
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+
+const { modelValue, icon, placeholder, type } = defineProps({
     modelValue: {
         type: [String, Number],
         default: ''
+    },
+    icon: {
+        type: Function,
+        default: null
     },
     placeholder: String,
     type: {

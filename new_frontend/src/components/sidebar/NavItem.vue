@@ -1,7 +1,7 @@
 <template>
     <RouterLink :to="to" v-slot="{ isActive }" custom>
         <a>
-            <BaseListItem :class="isActive ? 'text-accent2! bg-accent/15!' : ''" :label="label">
+            <BaseListItem :class="isActive ? 'text-accent2 bg-accent/15!' : 'text-text3'" :label="label">
                 <template #icon>
                     <component size="24" stroke="2" :is="icon" />
                 </template>

@@ -2,17 +2,11 @@ import { IconArrowNarrowDown, IconArrowNarrowUp, IconFlame, IconMinus } from "@t
 import { COLORS } from "./colors";
 
 export const TASK_PRIORITY_META = {
-    LOW: {
-        label: "Низкий",
-        icon: IconArrowNarrowDown,
-        textColor: COLORS.grey.text,
-        bgColor: COLORS.grey.bg
-    },
-    MEDIUM: {
-        label: "Средний",
-        icon: IconMinus,
-        textColor: COLORS.blue.text,
-        bgColor: COLORS.blue.bg
+    URGENT: {
+        label: "Срочно",
+        icon: IconFlame,
+        textColor: COLORS.red.text,
+        bgColor: COLORS.red.bg
     },
     HIGH: {
         label: "Высокий",
@@ -20,10 +14,16 @@ export const TASK_PRIORITY_META = {
         textColor: COLORS.amber.text,
         bgColor: COLORS.amber.bg
     },
-    URGENT: {
-        label: "Срочно",
-        icon: IconFlame,
-        textColor: COLORS.red.text,
-        bgColor: COLORS.red.bg
-    }
+    MEDIUM: {
+        label: "Средний",
+        icon: IconMinus,
+        textColor: COLORS.blue.text,
+        bgColor: COLORS.blue.bg
+    },
+    LOW: {
+        label: "Низкий",
+        icon: IconArrowNarrowDown,
+        textColor: COLORS.grey.text,
+        bgColor: COLORS.grey.bg
+    },
 }

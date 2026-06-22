@@ -1,6 +1,6 @@
 <template>
   <div class="absolute inset-0 bg-bg1/80 flex items-center justify-center">
-    <div class="w-full max-w-md rounded-xl bg-bg border border-border">
+    <div class="w-full max-w-md rounded-xl bg-bg1 border border-border">
       <header class="text-text3 p-6 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <slot name="icon" />

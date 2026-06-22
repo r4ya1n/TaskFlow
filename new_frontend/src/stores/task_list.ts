@@ -9,11 +9,19 @@ import { useProjectStore } from "./project";
 export const useTaskListStore = defineStore('tasks', () => {
     const projectStore = useProjectStore()
     const tasks = ref<TaskListItem[] | null>(null)
+    const tags = ref<string[] | null>(null)
+
+    const fetchTags = async () => {
+        if (!projectStore.project) return
+
+        const { data } = await http(`/project/${projectStore.project.id}/tags/`)
+        tags.value = data.results.map((raw: any) => raw.name)
+    }
 
     const fetchTasks = async () => {
         if (!projectStore.project) return
 
-        const { data }= await http.get(`/task/`, {
+        const { data } = await http.get(`/task/`, {
             params: {
                 "project": projectStore.project?.id
             }
@@ -35,8 +43,10 @@ export const useTaskListStore = defineStore('tasks', () => {
         () => projectStore.project?.id,
         async (newId) => {
             if (!newId) return
-            await fetchTasks()
-        }
+            await Promise.allSettled([fetchTasks(), fetchTags()])
+            
+        },
+        { immediate: true}
     )
-    return {tasks, fetchTasks}
+    return {tasks, tags, fetchTasks, fetchTags}
 })

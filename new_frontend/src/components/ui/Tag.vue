@@ -1,5 +1,5 @@
 <template>
-    <div class="px-2 py-px rounded-2xl" :class="[textColor, bgColor]">
+    <div class="px-2 py-px rounded-2xl cursor-pointer hover:outline" :class="[color.text, color.bg, color.outline]">
         {{ label }}
     </div>
 </template>
@@ -10,8 +10,6 @@ import { computed } from 'vue';
 const { label } = defineProps<{label: string}>()
 
 const color = computed(() => getColor(label));
-const textColor = computed(() => color.value.text);
-const bgColor = computed(() => color.value.bg);
 
 </script>
 

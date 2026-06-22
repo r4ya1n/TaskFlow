@@ -1,5 +1,5 @@
 <template>
-    <BaseListItem :label="project.title" :class="isActive ? 'text-text!' : ''">
+    <BaseListItem :label="project.title" :class="isActive ? 'text-text!' : 'text-text3'">
         <template #icon>
             <ProjectIcon :label="project.title"></ProjectIcon>
         </template>

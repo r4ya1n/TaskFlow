@@ -1,7 +1,19 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView
+from task.serializers import TagSerializer
+from task.models import Tag
 from .models import Project
 from .serializers import ProjectCreateSerializer, ProjectShortSerializer, ProjectSerializer
+
+class ProjectTagsView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TagSerializer
+    
+    def get_queryset(self):
+        project_id = self.kwargs['project_id']
+        
+        return Tag.objects.filter(tasks__project_id=project_id).distinct()
 
 class ProjectViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]

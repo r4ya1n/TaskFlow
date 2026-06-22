@@ -11,7 +11,7 @@ class ProjectMemberSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Membership
-        fields = ['user', 'role']
+        fields = ['id', 'user', 'role']
 
 class ProjectSerializer(serializers.ModelSerializer):
     members = ProjectMemberSerializer(source='memberships', many=True, read_only=True)

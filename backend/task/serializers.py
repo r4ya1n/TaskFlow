@@ -23,7 +23,6 @@ class TaskShortSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
     executor_id = serializers.IntegerField(source='executor.id', read_only=True)
     
-    # tags, executor_id
     class Meta:
         model = Task
         fields = ['id', 'title', 'executor_id', 'tags', 'status', 'priority', 'deadline']

@@ -1,9 +1,9 @@
 <template>
-    <div class="min-h-screen w-full bg-bg1 text-text font-sans font-medium">
+    <div class="w-full h-screen bg-bg1 text-text font-sans font-medium">
         <CreateProject v-if="createProjectIsOpen"></CreateProject>
-        <div class="flex">
+        <div class="flex overflow-hidden h-full min-h-0">
             <Sidebar />
-            <ProjectPanel v-if="projectStore.project" />
+            <ProjectPanel v-if="projectStore.project" class="" />
             <TaskList v-if="projectStore.project" class="flex-1" />
         </div>
     </div>
