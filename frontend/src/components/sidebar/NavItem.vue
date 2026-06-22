@@ -1,20 +1,21 @@
 <template>
-    <div class="flex items-center justify-center gap-2 rounded py-2 px-3 text-text2 cursor-pointer hover:bg-bg3
-    xl:justify-start">
-        <component class="w-5 h-5" :is="groupItem.icon"></component>
-        <a class="text-xs hidden xl:inline animation-text" href="#">
-            {{ groupItem.name }}
+    <RouterLink :to="to" v-slot="{ isActive }" custom>
+        <a>
+            <BaseListItem :class="isActive ? 'text-accent2 bg-accent/15!' : 'text-text3'" :label="label">
+                <template #icon>
+                    <component size="24" stroke="2" :is="icon" />
+                </template>
+            </BaseListItem>
         </a>
-    </div>
+    </RouterLink>
 </template>
 
-<script setup>
-const { item } = defineProps({
-    groupItem: {
-        type: Object,
-        requiered: true
-    }
-})
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+import BaseListItem from '../ui/BaseListItem.vue';
+import type { Component } from 'vue';
+
+const { label, to, icon } = defineProps<{ label: string, to: string, icon?: Component }>();
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
