@@ -26,3 +26,11 @@ class TaskShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['id', 'title', 'description', 'executor_id', 'tags', 'status', 'priority', 'deadline']
+        
+class TaskSerializer(TaskShortSerializer):
+    check_items = CheckItemSerializer(many=True, read_only=True)
+    author_id = serializers.IntegerField(source='author.id', read_only=True)
+    
+    class Meta:
+        model = Task
+        fields = TaskShortSerializer.Meta.fields + ['author_id', 'check_items']

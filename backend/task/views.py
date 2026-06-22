@@ -2,7 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Task
-from .serializers import TaskShortSerializer
+from .serializers import TaskShortSerializer, TaskSerializer
 from .filters import TaskFilter
 
 class TaskViewSet(viewsets.ModelViewSet):
@@ -17,3 +17,5 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return TaskShortSerializer
+        if self.action == 'retrieve':
+            return TaskSerializer
