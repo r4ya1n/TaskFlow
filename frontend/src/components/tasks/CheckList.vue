@@ -6,7 +6,7 @@
                 <div :style="{width: progressRatio}" class="h-full bg-teal rounded-xs"></div>
             </div>
             <div class="font-medium flex items-center gap-2 px-3 py-2 bg-bg3 rounded-md" v-for="checkItem in checkList" :key="checkItem.id">
-                <Checkbox :done="checkItem.isDone" />
+                <Checkbox :size="20" :done="checkItem.isDone" />
                 <div class="text-sm">
                     {{ checkItem.name }}
                 </div>

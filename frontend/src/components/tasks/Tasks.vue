@@ -6,7 +6,7 @@
             <ProjectPanel v-if="projectStore.project" class="" />
             <div class="@container flex-1 p-4">
                 <div class="grid @xl:grid-cols-2 gap-3 h-fit">
-                    <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :key="task.id" :task="task" />
+                    <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :selected="taskIsSelected(task.id)" :key="task.id" :task="task" />
                 </div>
             </div>
             <TaskDetail @closed="taskStore.activeTaskId=null" v-if="taskStore.task" :task="taskStore.task" />
@@ -31,6 +31,10 @@ const taskListStore = useTaskListStore();
 const taskStore = useTaskStore()
 
 provide('createProjectIsOpen', createProjectIsOpen)
+
+const taskIsSelected = (id: number) => {
+    return id === taskStore.activeTaskId
+}
 
 </script>
 

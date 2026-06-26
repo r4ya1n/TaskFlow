@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col gap-2 text-xs p-3 bg-bg2 border border-border rounded-xl
-    hover:border-text5 cursor-pointer">
+    <div :class="selected ? 'border-accent' : 'border-border hover:border-text5'" class="flex flex-col gap-2 text-xs p-3 bg-bg2 border rounded-xl
+     cursor-pointer">
         <div class="flex items-center gap-4">
-            <Checkbox :done="isDone" />
+            <Checkbox :size="24" :class="selected ? 'border-accent!' : ''" :done="isDone" />
             <div class="">
                 <div class="mb-1 text-base" :class="isDone ? 'text-text3 line-through' : ''">{{ task.title }}</div>
                 <div class="flex gap-1">
@@ -22,7 +22,8 @@
                 <TaskPill :meta="status" />
                 <TaskPill :meta="priority"" />
             </div>
-            <div class="text-sm font-mono" :class="deadlineClass">{{ displayDeadline }}</div>
+            <div class=" text-sm font-mono">{{ displayDeadline }}
+            </div>
         </div>
     </div>
 </template>
@@ -38,25 +39,13 @@ import { displayShortUsername } from '@/utils/displayUsername.ts';
 import { computed } from 'vue';
 import Checkbox from '../ui/Checkbox.vue';
 
-const { task } = defineProps<{ task: TaskListItem }>()
+const { task, selected } = defineProps<{ task: TaskListItem, selected?: boolean }>()
+
 const status = TASK_STATUS_META[task.status]
 const priority = TASK_PRIORITY_META[task.priority]
 const displayDeadline = new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline)
 
-const addDays = (days: number): Date => {
-    const date = new Date()
-    date.setDate(date.getDay() + days)
-    return date
-};
-
-const isDone = computed<boolean>(() => task.status === "DONE")
-const deadlineClass = computed(() => {
-    if (isDone.value) return 'text-teal'
-    if (task.deadline < addDays(1)) return 'text-red'
-    if (task.deadline < addDays(3)) return 'text-amber'
-    return ''
-})
-
+const isDone = computed<boolean>(() => task.status === "DONE");
 
 </script>
 

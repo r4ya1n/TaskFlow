@@ -1,6 +1,6 @@
 <template>
-    <div class="rounded-md size-5 cursor-pointer" :class="done ? 'bg-teal' : 'border border-border'">
-        <IconCheck size="20" v-if="done"></IconCheck>
+    <div :style="{width: size + 'px', height: size + 'px'}" class="rounded-md cursor-pointer" :class="done ? 'bg-teal' : 'border border-border'">
+        <IconCheck :size="size" v-if="done"></IconCheck>
     </div>
 </template>
 
@@ -12,6 +12,10 @@ const { done } = defineProps({
     done: {
         type: Boolean,
         default: false
+    },
+    size: {
+        type: Number,
+        required: true
     }
 });
 
