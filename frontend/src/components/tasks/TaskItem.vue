@@ -21,10 +21,8 @@
         </div>
         <div class="flex items-center justify-between">
             <div class="flex gap-2">
-                <TaskPill :label="statusMeta.label" :icon="statusMeta.icon" :text-color="statusMeta.textColor"
-                    :bg-color="statusMeta.bgColor" />
-                <TaskPill :label="priorityMeta.label" :icon="priorityMeta.icon" :text-color="priorityMeta.textColor"
-                    :bg-color="priorityMeta.bgColor" />
+                <TaskPill :meta="status" />
+                <TaskPill :meta="priority"" />
             </div>
             <div class="text-sm font-mono" :class="deadlineClass">{{ displayDeadline }}</div>
         </div>
@@ -43,8 +41,8 @@ import { computed } from 'vue';
 import { IconCheck } from '@tabler/icons-vue';
 
 const { task } = defineProps<{ task: TaskListItem }>()
-const statusMeta = TASK_STATUS_META[task.status]
-const priorityMeta = TASK_PRIORITY_META[task.priority]
+const status = TASK_STATUS_META[task.status]
+const priority = TASK_PRIORITY_META[task.priority]
 const displayDeadline = new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline)
 
 const addDays = (days: number): Date => {

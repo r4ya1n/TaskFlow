@@ -1,16 +1,16 @@
 <template>
     <div class="flex items-center whitespace-nowrap gap-1 px-2 py-1 w-fit h-fit rounded-2xl"
-        :class="[textColor, bgColor]">
-        <component size="18" :is="icon"></component>
-        <div class="">{{ label }}</div>
+        :class="[meta.textColor, meta.bgColor]">
+        <component size="18" :is="meta.icon"></component>
+        <div class="">{{ meta.label }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { Component } from 'vue';
+import type { OptionMeta } from '@/types/task';
 
 
-const { label, icon, textColor, bgColor } = defineProps<{ label: string, icon: Component, textColor: string, bgColor: string }>()
+const { meta } = defineProps<{ meta: OptionMeta }>()
 
 </script>
 
