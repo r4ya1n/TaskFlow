@@ -25,9 +25,7 @@ const { checkList } = defineProps<{checkList: CheckItem[]}>()
 
 const done = computed(() => checkList.filter((item) => item.isDone).length)
 const total = computed(() => checkList.length)
-const progressRatio = computed(() => `${(done.value / total.value) * 100}%`) 
-console.log(progressRatio.value);
-
+const progressRatio = computed(() => done.value ? `${(done.value / total.value) * 100}%` : '0%') 
 
 </script>
 

@@ -40,6 +40,7 @@ export const useProjectStore = defineStore('project', () => {
     watch (() => activeProjectId.value, async (newId) => {
         if (!newId) {
             project.value = null
+            activeProjectId.value = null
             return
         }
         await Promise.allSettled([fetchProject(), fetchTags()]) 

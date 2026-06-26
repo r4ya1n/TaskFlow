@@ -39,6 +39,7 @@ export const useTaskStore = defineStore('task', () => {
         async ([newTaskId, newProjectId], [_, oldProjectId]) => {
             if (newProjectId !== oldProjectId || !newTaskId) {
                 task.value = null
+                activeTaskId.value = null
                 return
             }
             await fetchTask()
