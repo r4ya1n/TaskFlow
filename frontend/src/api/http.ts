@@ -8,6 +8,9 @@ export const http = axios.create({
 })
 
 http.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  if (config.url?.includes("/auth/logout/") || config.url?.includes("/auth/token/refresh/")) {
+    return config
+  }
   const userStore = useUserStore()
   if (userStore.token) {
     config.headers.Authorization = `Bearer ${userStore.token}`
@@ -16,6 +19,9 @@ http.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 });
 
 const refreshAuth = async (failedRequest: any) => {
+  if (failedRequest.response.config.url.includes('/auth/token/refresh/')) {
+    return Promise.reject(failedRequest)
+  }
   const userStore = useUserStore()
   try {
     await userStore.refreshTokenAction()

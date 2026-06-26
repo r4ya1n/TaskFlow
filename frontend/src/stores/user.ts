@@ -54,11 +54,13 @@ export const useUserStore = defineStore('user', () => {
 
   const logout = async () => {
     try {
+      console.log('start logout');
       await http.post('/auth/logout/', { refresh: refreshToken.value },
         { skipAuthRefresh: true } as AxiosAuthRefreshRequestConfig
       )
+      console.log('end logout 1');
     } finally {
-      console.log('mice');
+      console.log('end logout 2');
       
       user.value = null
       token.value = null

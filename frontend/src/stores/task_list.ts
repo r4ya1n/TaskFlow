@@ -45,12 +45,14 @@ export const useTaskListStore = defineStore('tasks', () => {
     }
     watch(
         () => [projectStore.project?.id, filter.value.status, filter.value.priority],
-        async (newId) => {
-            if (!newId) return
+        async ([newProjectId]) => {
+            if (!newProjectId) {
+                tasks.value = null
+                return
+            }
             await fetchTasks()
 
-        },
-        { immediate: true }
+        }
     )
     return { tasks, filter, fetchTasks }
 })

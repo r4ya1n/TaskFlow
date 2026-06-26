@@ -35,9 +35,12 @@ export const useTaskStore = defineStore('task', () => {
         }
     }
     watch(
-        () => activeTaskId.value,
-        async (newId) => {
-            if (!newId) return
+        () => [activeTaskId.value, projectStore.activeProjectId],
+        async ([newTaskId, newProjectId], [_, oldProjectId]) => {
+            if (newProjectId !== oldProjectId || !newTaskId) {
+                task.value = null
+                return
+            }
             await fetchTask()
         }
     )

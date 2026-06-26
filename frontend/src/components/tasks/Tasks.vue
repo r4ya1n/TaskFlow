@@ -9,7 +9,7 @@
                     <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :key="task.id" :task="task" />
                 </div>
             </div>
-            <TaskDetail v-if="taskStore.task?.id" :task="taskStore.task" />
+            <TaskDetail @closed="taskStore.activeTaskId=null" v-if="taskStore.task" :task="taskStore.task" />
         </div>
     </div>
 </template>

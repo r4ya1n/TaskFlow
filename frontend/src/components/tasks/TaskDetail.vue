@@ -3,7 +3,7 @@
         <header class="p-5 border-b border-border">
             <div class="flex items-center justify-between mb-2">
                 <h3 class="">{{ task?.title }}</h3>
-                <IconX class="text-text3 cursor-pointer" size="18" />
+                <IconX @click="emit('closed')" class="text-text3 cursor-pointer" size="18" />
             </div>
             <div class="flex text-sm gap-1">
                 <Tag v-for="tag in task?.tags" :key="tag" :label="tag"></Tag>
@@ -65,6 +65,8 @@ import type { Task } from '@/types/task.ts';
 import { displayShortUsername } from '@/utils/displayUsername.ts';
 
 const { task } = defineProps<{ task: Task }>()
+
+const emit = defineEmits(["closed"])
 
 const status = TASK_STATUS_META[task.status]
 const priority = TASK_PRIORITY_META[task.priority]

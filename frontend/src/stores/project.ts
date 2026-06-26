@@ -1,7 +1,7 @@
 import { http } from "@/api/http";
 import type { Member, Project } from "@/types/project";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export const useProjectStore = defineStore('project', () => {
     const project = ref<Project | null>(null)
@@ -37,10 +37,13 @@ export const useProjectStore = defineStore('project', () => {
         }
     }
 
-    const selectProject = async (id: number) => {
-        activeProjectId.value = id
+    watch (() => activeProjectId.value, async (newId) => {
+        if (!newId) {
+            project.value = null
+            return
+        }
         await Promise.allSettled([fetchProject(), fetchTags()]) 
-    }
+    })
 
-    return { project, membersById, tags, fetchProject, selectProject }
+    return { project, activeProjectId, membersById, tags, fetchProject }
 })

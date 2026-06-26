@@ -12,7 +12,7 @@
                     <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-                    <ProjectItem v-for="prj in project_list.projects" @click="project.selectProject(prj.id)" :key="prj.id" :project="prj"></ProjectItem>
+                    <ProjectItem v-for="prj in projectListStore.projects" @click="selectProject(prj.id)" :key="prj.id" :project="prj"></ProjectItem>
                     <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
@@ -46,14 +46,22 @@ import { useListProjectsStore } from '@/stores/project_list.ts';
 import { useProjectStore } from '@/stores/project.ts';
 
 onMounted(async () => {
-    await project_list.fetchProjects();
+    await projectListStore.fetchProjects();
 })
 
-const project_list = useListProjectsStore();
-const project = useProjectStore()
+const projectListStore = useListProjectsStore();
+const projectStore = useProjectStore()
 const user = useUserStore()
 
 const createProjectIsOpen = inject("createProjectIsOpen")
+
+const selectProject = (id: number) => {
+    if (id === projectStore.activeProjectId) {
+        projectStore.activeProjectId = null;
+        return
+    }
+    projectStore.activeProjectId = id;
+}
 
 const router = useRouter()
 const onLogout = async () => {
