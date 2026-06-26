@@ -13,7 +13,7 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@tabler/icons-vue": "^3.44.0",
     "@tailwindcss/vite": "^4.3.0",
-    "@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-react": "^6.0.3",
     "axios": "^1.17.0",
     "axios-auth-refresh": "^5.0.2",
     "pinia": "^3.0.4",

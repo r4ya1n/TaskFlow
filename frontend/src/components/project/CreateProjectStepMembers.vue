@@ -3,11 +3,10 @@
   <div class="text-text3 flex items-center gap-2">
     <BaseInput @focus="error_field = false" :class="error_field ? 'border-red' : ''" v-model="email" class="bg-bg4"
       type="email" placeholder="email@example.com" />
-    <select v-model="role"
-      class="w-fit py-2 border border-border rounded-md hover:border-border2 focus:border-border2 cursor-pointer focus:outline-none">
+    <BaseSelector v-model="role">
       <option value="MEMBER">Участник</option>
       <option value="ADMIN">Админ</option>
-    </select>
+    </BaseSelector>
     <BaseActionButton @click="addMember()" class="text-text bg-bg4">Добавить</BaseActionButton>
   </div>
   <div class="flex items-center justify-between text-sm p-2 bg-bg3 border border-border rounded-sm" v-for="member in form?.members">
@@ -32,6 +31,7 @@ import { displayFullUsername } from '@/utils/displayUsername.ts';
 import type { CreateProjectForm, Role } from '@/types/project.ts';
 import { capitalizeText } from '@/utils/capitalizeText.ts';
 import { getUser } from '@/api/project.api.ts';
+import BaseSelector from '../ui/BaseSelector.vue';
 
 const email = ref('')
 const role = ref<Role>('MEMBER')

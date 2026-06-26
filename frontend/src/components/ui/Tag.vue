@@ -1,5 +1,5 @@
 <template>
-    <div class="px-2 py-px rounded-2xl cursor-pointer" :class="[color.text, color.bg, isActive && color.outline]">
+    <div class="px-2 py-px rounded-2xl cursor-pointer w-fit" :class="[color.text, color.bg, isActive && color.outline]">
         {{ label }}
     </div>
 </template>

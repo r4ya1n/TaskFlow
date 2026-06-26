@@ -13,4 +13,5 @@ import "@fontsource/jetbrains-mono";
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-createApp(App).use(router).use(pinia).mount('#app')
+createApp(App)
+    .use(router).use(pinia).mount('#app')

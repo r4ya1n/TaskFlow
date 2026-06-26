@@ -1,6 +1,7 @@
 <template>
     <div class="w-full h-screen bg-bg1 text-text font-sans font-medium">
         <CreateProject v-if="createProjectIsOpen"></CreateProject>
+        <CreateTask></CreateTask>
         <div class="flex overflow-hidden h-full min-h-0">
             <Sidebar />
             <ProjectPanel v-if="projectStore.project" class="" />
@@ -24,6 +25,7 @@ import TaskDetail from './TaskDetail.vue';
 import { useTaskListStore } from '@/stores/task_list.ts';
 import TaskItem from './TaskItem.vue';
 import { useTaskStore } from '@/stores/task.ts';
+import CreateTask from './CreateTask.vue';
 
 const createProjectIsOpen = ref<boolean>(false);
 const projectStore = useProjectStore();
