@@ -37,6 +37,7 @@
                     </DetailItem>
                 </div>
             </div>
+            <CheckList :check-list="task.check_items" />
         </div>
     </div>
 </template>
@@ -51,6 +52,7 @@ import type { Task } from '@/types/task.ts';
 import DetailItem from './DetailItem.vue';
 import { computed } from 'vue';
 import UserBadge from '../ui/UserBadge.vue';
+import CheckList from './CheckList.vue';
 
 const { task } = defineProps<{ task: Task }>()
 

@@ -2,9 +2,7 @@
     <div class="flex flex-col gap-2 text-xs p-3 bg-bg2 border border-border rounded-xl
     hover:border-text5 cursor-pointer">
         <div class="flex items-center gap-4">
-            <div class="size-6 rounded-md  cursor-pointer" :class="isDone ? 'bg-teal' : 'border border-border'">
-                <IconCheck v-if="isDone"></IconCheck>
-            </div>
+            <Checkbox :done="isDone" />
             <div class="">
                 <div class="mb-1 text-base" :class="isDone ? 'text-text3 line-through' : ''">{{ task.title }}</div>
                 <div class="flex gap-1">
@@ -38,7 +36,7 @@ import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
 import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
 import { displayShortUsername } from '@/utils/displayUsername.ts';
 import { computed } from 'vue';
-import { IconCheck } from '@tabler/icons-vue';
+import Checkbox from '../ui/Checkbox.vue';
 
 const { task } = defineProps<{ task: TaskListItem }>()
 const status = TASK_STATUS_META[task.status]
