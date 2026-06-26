@@ -18,10 +18,7 @@
             </nav>
         </div>
         <div class="flex items-center justify-between py-4 gap-2 border-t border-border">
-            <div class="flex items-center gap-2">
-                <Avatar class="size-9" :user="user.user"></Avatar>
-                <div class="test-xs">{{ displayShortUsername(user.user) }}</div>
-            </div>
+            <UserBadge :user="user.user"></UserBadge>
             <div class="flex items-center gap-1">
                 <IconSettings class="text-text2" size="24"></IconSettings>
                 <IconLogout @click="onLogout()" class="text-red cursor-pointer" size="24"></IconLogout>
@@ -36,14 +33,13 @@ import NavItem from './NavItem.vue';
 import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
 import NavGroup from './NavGroup.vue';
 import { inject, onMounted } from 'vue';
-import Avatar from '../ui/Avatar.vue';
 import { useRouter } from 'vue-router';
 import BaseAddButton from '../ui/BaseAddButton.vue';
 import ProjectItem from './ProjectItem.vue';
-import { displayShortUsername } from '@/utils/displayUsername.ts';
 import { useUserStore } from '@/stores/user.ts';
 import { useListProjectsStore } from '@/stores/project_list.ts';
 import { useProjectStore } from '@/stores/project.ts';
+import UserBadge from '../ui/UserBadge.vue';
 
 onMounted(async () => {
     await projectListStore.fetchProjects();

@@ -1,6 +1,6 @@
 <template>
-    <div class="text-text3 p-3 bg-bg3 rounded-xl">
-        <h5 class="uppercase text-sm mb-1">{{ title }}</h5>
+    <div class="p-3 bg-bg3 rounded-xl">
+        <h5 class="uppercase text-text3 text-sm mb-1">{{ title }}</h5>
         <slot />
     </div>
 </template>

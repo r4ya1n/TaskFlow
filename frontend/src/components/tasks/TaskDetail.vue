@@ -16,7 +16,7 @@
             </div>
             <div>
                 <h4 class="uppercase text-text3 text-sm mb-2">Детали</h4>
-                <div class="grid grid-cols-2 gap-2 grid-rows-3">
+                <div class="text-text grid grid-cols-2 gap-2 grid-rows-3">
                     <DetailItem title="Статус">
                         <TaskPill class="text-xs" :meta="status" />
                     </DetailItem>
@@ -24,19 +24,13 @@
                         <TaskPill class="text-xs" :meta="priority" />
                     </DetailItem>
                     <DetailItem title="Исполнитель">
-                        <div class="flex items-center gap-2">
-                            <Avatar class="size-7" :user="task.executor"></Avatar>
-                            <div class="text-text">{{ displayShortUsername(task.executor) }}</div>
-                        </div>
+                        <UserBadge :user="task.executor" />
                     </DetailItem>
                     <DetailItem title="Автор">
-                        <div class="flex items-center gap-2">
-                            <Avatar class="size-7" :user="task.author"></Avatar>
-                            <div class="text-text">{{ displayShortUsername(task.author) }}</div>
-                        </div>
+                        <UserBadge :user="task.author" />
                     </DetailItem>
-                    <DetailItem title="Дедлайн">
-                        <div class="flex items-center gap-1 text-text">
+                    <DetailItem class="col-span-2" title="Дедлайн">
+                        <div class="flex items-center gap-1">
                             <IconCalendarEvent size="22" />
                             <div>{{ displayDeadline }}</div>
                         </div>
@@ -53,19 +47,18 @@ import Tag from '../ui/Tag.vue';
 import TaskPill from '../ui/TaskPill.vue';
 import { TASK_STATUS_META } from '@/constants/TaskStatus';
 import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
-import Avatar from '../ui/Avatar.vue';
 import type { Task } from '@/types/task.ts';
-import { displayShortUsername } from '@/utils/displayUsername.ts';
 import DetailItem from './DetailItem.vue';
 import { computed } from 'vue';
+import UserBadge from '../ui/UserBadge.vue';
 
 const { task } = defineProps<{ task: Task }>()
 
 const emit = defineEmits(["closed"])
 
 const status = computed(() => TASK_STATUS_META[task.status])
-const priority = computed(() => TASK_PRIORITY_META[task.priority]) 
-const displayDeadline = computed(() => new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline)) 
+const priority = computed(() => TASK_PRIORITY_META[task.priority])
+const displayDeadline = computed(() => new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline))
 
 </script>
 
