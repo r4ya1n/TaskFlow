@@ -1,5 +1,5 @@
 <template>
-    <BaseModal class="">
+    <BaseModal @close="createTaskIsOpen = false">
         <template #icon>
             <IconPlus />
         </template>
@@ -18,7 +18,7 @@
         <div>
             <DividerTitle class="mb-4" title="Чеклист"></DividerTitle>
             <div @keypress.enter="addCheckItem()" class="flex flex-col gap-1">
-                <CheckItem v-for="(CheckItem, idx) in checkList" :key="idx" :check-item="CheckItem"></CheckItem>
+                <CheckItem v-for="CheckItem in checkList" :key="CheckItem.name" :check-item="CheckItem"></CheckItem>
                 <div class="flex items-center gap-2 px-3 py-2 text-text3 text-sm rounded-md hover:outline hover:outline-border">
                     <IconPlus class="cursor-pointer" @click="addCheckItem()" size="18" />
                     <DynamicInput v-model="newCheckItem.name" placeholder="Добавить пункт" />
@@ -47,7 +47,7 @@ import BaseActionButton from '../ui/BaseActionButton.vue';
 import GeneralCreateTask from './GeneralCreateTask.vue';
 import DividerTitle from '../ui/DividerTitle.vue';
 import type { ICheckItem } from '@/types/task.ts';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import DynamicInput from '../ui/DynamicInput.vue';
 import { capitalizeText } from '@/utils/capitalizeText.ts';
 
@@ -62,6 +62,8 @@ const addCheckItem = () => {
     checkList.value.push({name: name, isDone: false})
     newCheckItem.value.name = ''
 }
+
+const createTaskIsOpen = inject("createTaskIsOpen")
 
 </script>
 

@@ -10,7 +10,7 @@
                     {{ displayCountMembers }}
                 </div>
             </div>
-            <button class="flex items-center justify-center w-full text-sm gap-2 py-2 px-4 border border-accent rounded-lg text-accent bg-accent/15 cursor-pointer">
+            <button @click="CreateTaskIsOpen = true" class="flex items-center justify-center w-full text-sm gap-2 py-2 px-4 border border-accent rounded-lg text-accent bg-accent/15 cursor-pointer">
                 <IconPlus size="15"  stroke="3"/>
                 Новая задача
             </button>
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { IconPlus, IconSettings } from '@tabler/icons-vue';
 import { useProjectStore } from '@/stores/project.ts';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { pluralize } from '@/utils/pluralization.ts';
 import TaskFilter from './TaskFilter.vue';
 
@@ -37,6 +37,8 @@ const displayCountMembers = computed((): string => {
     const count = project.value.members.length
     return count.toString() + " " + pluralize(count, "участник", "участника", "участников")
 })
+
+const CreateTaskIsOpen = inject<boolean>("createTaskIsOpen")
 
 </script>
 

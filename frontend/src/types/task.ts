@@ -16,7 +16,16 @@ export type TaskFilter = {
     status: string
 }
 
-export type All = "All"
+export interface ICreateTaskForm {
+    tags: string[],
+    title: string,
+    description: string,
+    executor: number,
+    status: Status,
+    priority: Priority,
+    deadline: Date
+}
+
 export type Status = "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE"
 export type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT"
 

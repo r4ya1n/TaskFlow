@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-screen bg-bg1 text-text font-sans font-medium">
         <CreateProject v-if="createProjectIsOpen"></CreateProject>
-        <CreateTask></CreateTask>
+        <CreateTask v-if="createTaskIsOpen"></CreateTask>
         <div class="flex overflow-hidden h-full min-h-0">
             <Sidebar />
             <ProjectPanel v-if="projectStore.project" class="" />
@@ -28,10 +28,12 @@ import { useTaskStore } from '@/stores/task.ts';
 import CreateTask from './CreateTask.vue';
 
 const createProjectIsOpen = ref<boolean>(false);
+const createTaskIsOpen = ref<boolean>(false);
 const projectStore = useProjectStore();
 const taskListStore = useTaskListStore();
 const taskStore = useTaskStore()
 
+provide('createTaskIsOpen', createTaskIsOpen)
 provide('createProjectIsOpen', createProjectIsOpen)
 
 const taskIsSelected = (id: number) => {
