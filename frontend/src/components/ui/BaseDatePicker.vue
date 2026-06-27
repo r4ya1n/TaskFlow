@@ -1,10 +1,7 @@
 <template>
     <DatePicker class="my-datepicker" ref="datePickerRef" :step-minute="15" v-model="date" :min-date="new Date()"
-        showButtonBar show-icon iconDisplay="input" placeholder="Выбрать дату" showTime hourFormat="24"
+        showButtonBar placeholder="Выбрать дату" showTime hourFormat="24"
         dateFormat="dd.mm.yy">
-        <template #inputicon="{ clickCallback }">
-            <IconCalendarEvent stroke="1" size="18" class="text-text cursor-pointer" @click="clickCallback" />
-        </template>
         <template #buttonbar="{ clearCallback }">
             <div class="flex flex-col gap-2">
                 <div class="flex gap-2">
@@ -24,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { IconCalendarEvent } from "@tabler/icons-vue";
 import { Button, DatePicker } from "primevue";
 import { ref } from "vue";
 
