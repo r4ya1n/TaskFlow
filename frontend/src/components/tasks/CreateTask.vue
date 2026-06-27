@@ -1,5 +1,5 @@
 <template>
-    <BaseModal>
+    <BaseModal class="">
         <template #icon>
             <IconPlus />
         </template>
@@ -13,15 +13,15 @@
         </div>
         <div>
             <DividerTitle class="mb-3" title="Основное"></DividerTitle>
-            <div class="flex mb-4">
-                <div class="w-1/3">
+            <div class="flex justify-between mb-4">
+                <div>
                     <div class="uppercase text-sm text-text3 tracking-wide mb-1">Статус</div>
                     <BaseSelector>
                         <option v-for="[status, meta] in statuses" :key="status" :value="status">{{ meta.label }}
                         </option>
                     </BaseSelector>
                 </div>
-                <div class="w-1/3">
+                <div>
                     <div class="uppercase text-sm text-text3 tracking-wide mb-1">Приоритет</div>
                     <BaseSelector>
                         <option v-for="[priority, meta] in priorities" :key="priority" :value="priority">{{ meta.label
@@ -29,9 +29,9 @@
                         </option>
                     </BaseSelector>
                 </div>
-                <div class="w-1/3">
+                <div>
                     <div class="uppercase text-sm text-text3 tracking-wide mb-1">Дедлайн</div>
-
+                    <BaseDatePicker></BaseDatePicker>
                 </div>
             </div>
             <div class="flex">
@@ -84,6 +84,7 @@ import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
 import Tag from '../ui/Tag.vue';
 import type { User } from '@/types/auth.ts';
 import Avatar from '../ui/Avatar.vue';
+import BaseDatePicker from '../ui/BaseDatePicker.vue';
 
 const statuses = Object.entries(TASK_STATUS_META)
 const priorities = Object.entries(TASK_PRIORITY_META)
