@@ -20,8 +20,8 @@ export type All = "All"
 export type Status = "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE"
 export type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT"
 
-export interface CheckItem {
-    id: number,
+export interface ICheckItem {
+    id?: number,
     name: string,
     isDone: boolean
 }
@@ -39,5 +39,5 @@ export interface TaskListItem {
 
 export interface Task extends TaskListItem {
     author: Member,
-    check_items: CheckItem[]
+    check_items: ICheckItem[]
 }

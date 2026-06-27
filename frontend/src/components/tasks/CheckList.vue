@@ -5,23 +5,18 @@
             <div class="w-full h-1 bg-bg3 rounded-xs">
                 <div :style="{width: progressRatio}" class="h-full bg-teal rounded-xs"></div>
             </div>
-            <div class="font-medium flex items-center gap-2 px-3 py-2 bg-bg3 rounded-md" v-for="checkItem in checkList" :key="checkItem.id">
-                <Checkbox :size="20" :done="checkItem.isDone" />
-                <div class="text-sm">
-                    {{ checkItem.name }}
-                </div>
-            </div>
+            <CheckItem v-for="checkItem in checkList" :key="checkItem.id" :check-item="checkItem"></CheckItem>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { CheckItem } from '@/types/task';
-import Checkbox from '../ui/Checkbox.vue';
+import type { ICheckItem } from '@/types/task';
 import { computed } from 'vue';
+import CheckItem from './CheckItem.vue';
 
 
-const { checkList } = defineProps<{checkList: CheckItem[]}>()
+const { checkList } = defineProps<{checkList: ICheckItem[]}>()
 
 const done = computed(() => checkList.filter((item) => item.isDone).length)
 const total = computed(() => checkList.length)

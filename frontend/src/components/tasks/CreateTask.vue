@@ -13,48 +13,16 @@
         </div>
         <div>
             <DividerTitle class="mb-3" title="Основное"></DividerTitle>
-            <div class="flex justify-between mb-4">
-                <div>
-                    <div class="uppercase text-sm text-text3 tracking-wide mb-1">Статус</div>
-                    <BaseSelector>
-                        <option v-for="[status, meta] in statuses" :key="status" :value="status">{{ meta.label }}
-                        </option>
-                    </BaseSelector>
-                </div>
-                <div>
-                    <div class="uppercase text-sm text-text3 tracking-wide mb-1">Приоритет</div>
-                    <BaseSelector>
-                        <option v-for="[priority, meta] in priorities" :key="priority" :value="priority">{{ meta.label
-                        }}
-                        </option>
-                    </BaseSelector>
-                </div>
-                <div>
-                    <div class="uppercase text-sm text-text3 tracking-wide mb-1">Дедлайн</div>
-                    <BaseDatePicker></BaseDatePicker>
-                </div>
-            </div>
-            <div class="flex">
-                <div class="w-1/2">
-                    <div class="uppercase text-sm text-text3 tracking-wide mb-1">Испольнитель</div>
-                    <div class="flex items-center gap-2">
-                        <Avatar :user="user" />
-                        <div
-                            class="flex items-center justify-center size-fit p-1 rounded-full bg-bg3 border border-border cursor-pointer">
-                            <IconPlus size="20" class="text-text3" />
-                        </div>
-                    </div>
-                </div>
-                <div class="w-1/2">
-                    <div class="uppercase text-sm text-text3 tracking-wide mb-1">Теги</div>
-                    <div class="flex items-center gap-2">
-                        <Tag label="Backend"></Tag>
-                        <div
-                            class="flex items-center gap-1 bg-bg3 text-text3 border border-border px-2 py-px rounded-2xl cursor-pointer w-fit">
-                            <IconPlus size="20" />
-                            <div>Тег</div>
-                        </div>
-                    </div>
+            <GeneralCreateTask />
+        </div>
+        <div>
+            <DividerTitle class="mb-4" title="Чеклист"></DividerTitle>
+            <div @keypress.enter="addCheckItem()" class="flex flex-col gap-1">
+                <CheckItem :check-item="mockCheckItem"></CheckItem>
+                <CheckItem v-for="(CheckItem, idx) in checkList" :key="idx" :check-item="CheckItem"></CheckItem>
+                <div class="flex items-center gap-2 px-3 py-2 text-text3 text-sm cursor-pointer">
+                    <IconPlus @click="addCheckItem()" size="18" />
+                    <DynamicInput v-model="newCheckItem.name" placeholder="Добавить пункт" />
                 </div>
             </div>
         </div>
@@ -77,24 +45,29 @@ import { IconCheck, IconPlus } from '@tabler/icons-vue';
 import BaseModal from '../ui/BaseModal.vue';
 import BaseInput from '../ui/BaseInput.vue';
 import BaseActionButton from '../ui/BaseActionButton.vue';
+import GeneralCreateTask from './GeneralCreateTask.vue';
 import DividerTitle from '../ui/DividerTitle.vue';
-import BaseSelector from '../ui/BaseSelector.vue';
-import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
-import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
-import Tag from '../ui/Tag.vue';
-import type { User } from '@/types/auth.ts';
-import Avatar from '../ui/Avatar.vue';
-import BaseDatePicker from '../ui/BaseDatePicker.vue';
+import type { ICheckItem } from '@/types/task.ts';
+import CheckItem from './CheckItem.vue';
+import { ref } from 'vue';
+import DynamicInput from '../ui/DynamicInput.vue';
+import { capitalizeText } from '@/utils/capitalizeText.ts';
 
-const statuses = Object.entries(TASK_STATUS_META)
-const priorities = Object.entries(TASK_PRIORITY_META)
+const newCheckItem = ref<ICheckItem>({name: "", isDone: false});
+const checkList = ref<ICheckItem[]>([])
 
-const user: User = {
-    id: 32,
-    email: "mice@mail.ru",
-    username: "mouse",
-    first_name: "",
-    last_name: ""
+const mockCheckItem: ICheckItem = {
+    isDone: false,
+    name: "Изучить компоненты в Figma"
+}
+
+const addCheckItem = () => {
+    if (!newCheckItem.value.name) {
+        return
+    }
+    const name = capitalizeText(newCheckItem.value.name)
+    checkList.value.push({name: name, isDone: false})
+    newCheckItem.value.name = ''
 }
 
 </script>
