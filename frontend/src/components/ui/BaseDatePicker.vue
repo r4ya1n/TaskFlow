@@ -24,7 +24,7 @@
 import { Button, DatePicker } from "primevue";
 import { ref } from "vue";
 
-const date = ref();
+const date = defineModel<Date |  null>()
 const datePickerRef = ref();
 
 const setTime = (hours: number, minutes: number) => {

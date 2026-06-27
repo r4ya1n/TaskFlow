@@ -17,13 +17,14 @@ export type TaskFilter = {
 }
 
 export interface ICreateTaskForm {
-    tags: string[],
     title: string,
     description: string,
-    executor: number,
+    executor: number | null,
     status: Status,
     priority: Priority,
-    deadline: Date
+    deadline: Date | null,
+    tags: string[],
+    checkItems: ICheckItem[]
 }
 
 export type Status = "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE"
@@ -48,5 +49,5 @@ export interface TaskListItem {
 
 export interface Task extends TaskListItem {
     author: Member,
-    check_items: ICheckItem[]
+    checkItems: ICheckItem[]
 }
