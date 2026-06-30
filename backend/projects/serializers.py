@@ -1,76 +1,71 @@
 from rest_framework import serializers
 from .models import Project, Membership, User, Role
+from django.db import transaction
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
-class ProjectMemberSerializer(serializers.ModelSerializer):
+class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     
     class Meta:
         model = Membership
         fields = ['id', 'user', 'role']
 
-class ProjectSerializer(serializers.ModelSerializer):
-    members = ProjectMemberSerializer(source='memberships', many=True, read_only=True)
-    
-    class Meta:
-        model = Project
-        fields = ['id', 'title', 'members']
-        
-class ProjectShortSerializer(serializers.ModelSerializer):    
+class ProjectListSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Project
         fields = ['id', 'title']
 
-class MembershipInputSerializer(serializers.Serializer):
-    user_email = serializers.EmailField()
-    role = serializers.ChoiceField(choices=Role.choices)
-
-    def validate_user_email(self, value):
-        try:
-            user = User.objects.get(email=value)
-        except User.DoesNotExist:
-            raise serializers.ValidationError("User with this email not found")
-        
-        self._resolved_user = user
-        return value
+class ProjectDetailSerializer(ProjectListSerializer):
+    members = MemberSerializer(source='memberships', many=True, read_only=True)
     
-    def validate_role(self, value):
-        if value == Role.OWNER:
-            raise serializers.ValidationError("Role 'OWNER' cannot be assigned through the members list.")
-        return value
-    
-    def get_resolved_user(self):
-        return getattr(self, "__resolved_user", None)
-
-class ProjectCreateSerializer(serializers.ModelSerializer):
-    members = MembershipInputSerializer(many=True, required=False, write_only=True)
-
     class Meta:
         model = Project
-        fields = ["id", "title", "default_visability", "members"]
+        fields = ProjectListSerializer.Meta.fields + ['members']
 
-    def create(self, validated_data):
-        members_data = validated_data.pop("members", [])
+class MemberInputSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+    user = serializers.HiddenField(default=None)
+    
+    class Meta:
+        model = Membership
+        fields = ['role', 'email', 'user']
         
-        project = Project.objects.create(**validated_data)
-
-        request = self.context.get("request")
-        if request and hasattr(request, "user") and request.user.is_authenticated:
-            Membership.objects.create(project=project, user=request.user, role=Role.OWNER)
-        else:
-            raise serializers.ValidationError("Authorization is required")
-
-        for member_data in members_data:
-            user = User.objects.get(email=member_data["user_email"])
-
-            if user != request.user:
+    def validate_role(self, value):
+        if value == Role.OWNER:
+            raise serializers.ValidationError("The owner can be only one user")
+        return value
+    
+    def validate(self, attrs):
+        user = User.objects.filter(email=attrs['email']).first()
+        if user is None:
+            raise serializers.ValidationError({"email": f"User with email {attrs['email']}  not found"})
+        attrs['user'] = user
+        return attrs
+    
+class ProjectCreateSerializer(serializers.ModelSerializer):
+    members = MemberInputSerializer(many=True, write_only=True, required=False)
+    
+    class Meta:
+        model = Project
+        fields = ['title', 'default_visability', 'members']
+        
+    def create(self, validated_data):
+        members_data = validated_data.pop('members', [])
+        owner = self.context['request'].user
+        
+        with transaction.atomic():
+            project = Project.objects.create(**validated_data)
+            Membership.objects.create(role=Role.OWNER, user_id = owner.id, project_id = project.id)
+            for member in members_data:
+                user = member['user']
+                if user == owner:
+                    continue
                 Membership.objects.create(
-                    project=project, user=user, role=member_data["role"]
-                )
-
+                    role=member['role'], user_id=user.id, project_id=project.id
+                    )
         return project
 

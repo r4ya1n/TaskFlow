@@ -24,7 +24,7 @@ class Project(models.Model):
         default=DeafaultTaskVisability.PUBLIC.value,
     )
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="Membership", related_name="projects"
+        settings.AUTH_USER_MODEL, through="Membership", related_name="members"
     )
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Project(models.Model):
 
 class Membership(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        User,
         on_delete=models.CASCADE,
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='memberships')
