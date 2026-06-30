@@ -32,7 +32,7 @@
             <BaseActionButton @click="onCancel()">
                 Отмена
             </BaseActionButton>
-            <BaseActionButton @click="console.log(form)">
+            <BaseActionButton @click="postTask()">
                 <IconCheck />
                 Создать задачу
             </BaseActionButton>
@@ -52,7 +52,10 @@ import { inject, provide, reactive, type Ref } from 'vue';
 import DynamicInput from '../ui/DynamicInput.vue';
 import { capitalizeText } from '@/utils/capitalizeText.ts';
 import CheckItem from './CheckItem.vue';
+import { useTaskListStore } from '@/stores/task_list.ts';
+import axios from 'axios';
 
+const taskListStore = useTaskListStore()
 const newCheckItem = reactive<ICheckItem>({ name: "", isDone: false });
 
 const form = reactive<ICreateTaskForm>({
@@ -66,18 +69,29 @@ const form = reactive<ICreateTaskForm>({
     checkItems: []
 })
 
+provide("createTaskForm", form)
+const createTaskIsOpen = inject<Ref<boolean>>("createTaskIsOpen")!
+
+const postTask = async () => {
+    try {
+        await taskListStore.postTask({...form})
+        createTaskIsOpen.value = false
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            console.log(e.response);
+            
+        }
+    } 
+}
+
 const addCheckItem = () => {
     if (!newCheckItem.name) {
         return
     }
-    console.log(newCheckItem.name);
     const name = capitalizeText(newCheckItem.name)
     form.checkItems.push({ name: name, isDone: false })
     newCheckItem.name = ''
 }
-
-provide("createTaskForm", form)
-const createTaskIsOpen = inject<Ref<boolean>>("createTaskIsOpen")!
 
 const clearForm = () => {
     Object.assign({

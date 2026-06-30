@@ -12,18 +12,20 @@ export const useProjectStore = defineStore('project', () => {
     const fetchTags = async () => {
         if (!project) return
 
-        const { data } = await http(`/project/${activeProjectId.value}/tags/`)
+        const { data } = await http(`/projects/${activeProjectId.value}/tags/`)
         tags.value = data.results.map((raw: any) => raw.name)
     }
 
     const fetchProject = async () => {
-        const { data } = await http.get(`/project/${activeProjectId.value}/`)
+        const { data } = await http.get(`/projects/${activeProjectId.value}/`)
 
         const normalizedMembers: Record<number, Member> = {}
+        
         data.members.forEach((raw: any) => {
             normalizedMembers[raw.id] = {
             id: raw.id,
             role: raw.role,
+            user_id: raw.user.id,
             email: raw.user.email,
             username: raw.user.username,
             first_name: raw.user.first_name,

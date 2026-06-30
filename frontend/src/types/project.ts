@@ -13,6 +13,7 @@ export interface Project extends ProjectListItem {
 }
 export interface Member extends User {
     role: Role
+    user_id?: Number
 }
 export interface CreateProjectForm {
     title: string,

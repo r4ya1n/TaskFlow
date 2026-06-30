@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { TaskFilter, TaskListItem } from "@/types/task";
+import type { ICheckItem, ICreateTaskForm, TaskFilter, TaskListItem } from "@/types/task";
 import { ref, watch } from "vue";
 import { http } from "@/api/http";
 import type { Member } from "@/types/project";
@@ -19,9 +19,8 @@ export const useTaskListStore = defineStore('tasks', () => {
 
     const fetchTasks = async () => {
         if (!projectStore.project) return
-        const { data } = await http.get(`/task/`, {
+        const { data } = await http.get(`/projects/${projectStore.project.id}/tasks/`, {
             params: {
-                project: projectStore.project?.id,
                 title: filter.value.title,
                 description: filter.value.description,
                 priority: filter.value.priority,
@@ -29,6 +28,7 @@ export const useTaskListStore = defineStore('tasks', () => {
                 tags: [...filter.value.tags].join(',')
             }
         })
+
         const tags = (tags: any): string[] => tags.map((raw: any) => raw.name)
         const executor = (id: number): Member => projectStore.membersById[id]
 
@@ -36,12 +36,32 @@ export const useTaskListStore = defineStore('tasks', () => {
             id: raw.id,
             title: raw.title,
             desription: raw.desription,
-            executor: executor(raw.executor_id),
+            executor: executor(raw.executor),
             tags: tags(raw.tags),
             status: raw.status,
             priority: raw.priority,
             deadline: new Date(raw.deadline)
         }))
+    }
+
+    const postTask = async (form: ICreateTaskForm): Promise<void> => {
+        if (!projectStore.project) return
+
+        const checkItems = ((item: ICheckItem) => ({
+            name: item.name,
+            is_done: item.isDone
+        }))
+        await http.post(`projects/${projectStore.project.id}/tasks/`, {
+            title: form.title,
+            description: form.description,
+            status: form.status,
+            priority: form.priority,
+            deadline: form.deadline,
+            executor: form.executor,
+            checkItems: checkItems,
+            tags: form.tags
+        })
+        await fetchTasks()
     }
     watch(
         () => [projectStore.project?.id, filter.value.status, filter.value.priority],
@@ -54,5 +74,5 @@ export const useTaskListStore = defineStore('tasks', () => {
 
         }
     )
-    return { tasks, filter, fetchTasks }
+    return { tasks, filter, fetchTasks, postTask }
 })

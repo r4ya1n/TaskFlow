@@ -37,7 +37,7 @@
                     </DetailItem>
                 </div>
             </div>
-            <CheckList :check-list="task.check_items" />
+            <CheckList :check-list="task.checkItems" />
         </div>
     </div>
 </template>

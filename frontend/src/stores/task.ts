@@ -11,11 +11,12 @@ export const useTaskStore = defineStore('task', () => {
     const activeTaskId = ref<number | null>(null)
 
     const fetchTask = async () => {
-        const { data } = await http.get(`/task/${activeTaskId.value}/`)
+        if (!projectStore.project) return
+        const { data } = await http.get(`projects/${projectStore.project.id}/tasks/${activeTaskId.value}/`)
         
         const tags = data.tags.map((raw: any) => raw.name)
-        const executor = projectStore.membersById[data.executor_id]
-        const author = projectStore.membersById[data.author_id]
+        const executor = projectStore.membersById[data.executor]
+        const author = projectStore.membersById[data.author]
         const check_items = data.check_items.map((raw: any) => ({
             id: raw.id,
             name: raw.name,
@@ -31,7 +32,7 @@ export const useTaskStore = defineStore('task', () => {
             deadline: new Date(data.deadline),
             executor: executor,
             author: author,
-            check_items: check_items
+            checkItems: check_items
         }
     }
     watch(
