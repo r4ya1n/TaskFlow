@@ -34,3 +34,14 @@ class TaskSerializer(TaskShortSerializer):
     class Meta:
         model = Task
         fields = TaskShortSerializer.Meta.fields + ['author_id', 'check_items']
+        
+class TaskCreateSerializer(serializers.ModelSerializer):
+    # author_id? project_id? tags? checkitems?
+    class Meta:
+        model = Task
+        fields = ["title", "description", "status", "priority", "deadline", "executor_id"]
+    
+    def create(self, validate_data):
+        request = self.conetext['request']
+        
+    

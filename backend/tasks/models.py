@@ -34,11 +34,11 @@ class Task(models.Model):
         choices=Priority.choices,
         default=Priority.MEDIUM.value
     )
-    executor = models.ForeignKey("project.Membership", on_delete=models.SET_NULL, null=True, related_name="executor")
-    author = models.ForeignKey("project.Membership", on_delete=models.SET_NULL, null=True, related_name="author")
+    executor = models.ForeignKey("projects.Membership", on_delete=models.SET_NULL, null=True, related_name="executor")
+    author = models.ForeignKey("projects.Membership", on_delete=models.SET_NULL, null=True, related_name="author")
     deadline = models.DateTimeField()
     
-    project = models.ForeignKey("project.Project", on_delete=models.CASCADE, related_name="project")
+    project = models.ForeignKey("projects.Project", on_delete=models.CASCADE, related_name="project")
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title

@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView
-from task.serializers import TagSerializer
-from task.models import Tag
+from tasks.serializers import TagSerializer
+from tasks.models import Tag
 from .models import Project
 from .serializers import ProjectCreateSerializer, ProjectShortSerializer, ProjectSerializer
 
@@ -25,7 +25,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "list":
             return ProjectShortSerializer
-        if self.action == 'retrieve':
+        if self.action == 'retrive':
             return ProjectSerializer
         if self.action == "create":
             return ProjectCreateSerializer
