@@ -78,7 +78,7 @@ class TaskCreateSerializer(serializers.ModelSerializer):
             id=value.id, project_id=project_id
         ).first()
         if membership is None:
-            raise serializers.ValidationError({"The executor must be in this project."})
+            raise serializers.ValidationError("The executor must be in this project.")
 
         return value
 

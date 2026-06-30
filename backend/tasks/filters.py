@@ -1,8 +1,7 @@
-from django_filters import CharFilter, NumberFilter, FilterSet
+from django_filters import CharFilter, FilterSet
 from .models import Task
 
 class TaskFilter(FilterSet):
-    project = NumberFilter()
     status = CharFilter()
     priority = CharFilter()
     title = CharFilter(field_name='title', lookup_expr='icontains')
@@ -10,7 +9,7 @@ class TaskFilter(FilterSet):
     
     tags = CharFilter(method='filter_tags')
 
-    def filter_tags(self, queryset, name, value):
+    def filter_tags(self, queryset, value):
         tag_names = value.split(',')
 
         for tag in tag_names:
