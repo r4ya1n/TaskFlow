@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import type { ICheckItem } from '@/types/task';
 import { computed } from 'vue';
-import CheckItem from './CheckItem.vue';
+import type { ICheckItem } from '@/types/task';
+import CheckItem from '@ui/form/CheckItem.vue';
 
 
 const { checkList } = defineProps<{checkList: ICheckItem[]}>()

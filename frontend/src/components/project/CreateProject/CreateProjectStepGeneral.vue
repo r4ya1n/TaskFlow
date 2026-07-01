@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { inject} from 'vue'
-import { IconWorld, IconLock } from '@tabler/icons-vue'
-import FormField from '../ui/FormField.vue'
-import BaseInput from '../ui/BaseInput.vue'
-import BaseCard from '../ui/BaseCard.vue'
+import { inject } from 'vue'
 import type { CreateProjectForm } from '@/types/project.ts'
+import { IconWorld, IconLock } from '@tabler/icons-vue'
+import FormField from '@ui/form/FormField.vue'
+import BaseInput from '@ui/form/BaseInput.vue'
+import BaseCard from '@ui/display/BaseCard.vue'
 
 const form = inject<CreateProjectForm>('createProjectForm')
 if (!form) {

@@ -30,12 +30,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Member } from '@/types/project';
-import { Popover } from 'primevue';
-import Avatar from '../ui/Avatar.vue';
-import { displayShortUsername } from '@/utils/displayUsername';
 import { ref } from 'vue';
+import type { Member } from '@/types/project';
+import { displayShortUsername } from '@/utils/displayUsername';
 import { IconPlus } from '@tabler/icons-vue';
+import { Popover } from 'primevue';
+import Avatar from '@ui/display/Avatar.vue';
 
 const { members } = defineProps<{ members: Member[] }>()
 const emit = defineEmits<{ update: [id: number] }>()

@@ -41,19 +41,21 @@
 </template>
 
 <script setup lang="ts">
-import { IconCheck, IconPlus } from '@tabler/icons-vue';
-import BaseModal from '../ui/BaseModal.vue';
-import BaseInput from '../ui/BaseInput.vue';
-import BaseActionButton from '../ui/BaseActionButton.vue';
-import GeneralCreateTask from './GeneralCreateTask.vue';
-import DividerTitle from '../ui/DividerTitle.vue';
-import type { ICheckItem, ICreateTaskForm } from '@/types/task.ts';
 import { inject, provide, reactive, type Ref } from 'vue';
-import DynamicInput from '../ui/DynamicInput.vue';
-import { capitalizeText } from '@/utils/capitalizeText.ts';
-import CheckItem from './CheckItem.vue';
-import { useTaskListStore } from '@/stores/task_list.ts';
 import axios from 'axios';
+import { useTaskListStore } from '@/stores/task_list.ts';
+import type { ICheckItem, ICreateTaskForm } from '@/types/task.ts';
+import { capitalizeText } from '@/utils/capitalizeText.ts';
+import { IconCheck, IconPlus } from '@tabler/icons-vue';
+import BaseModal from '@ui/BaseModal.vue';
+import BaseActionButton from '@ui/buttons/BaseActionButton.vue';
+import BaseInput from '@ui/form/BaseInput.vue';
+import CheckItem from '@ui/form/CheckItem.vue';
+import DynamicInput from '@ui/form/DynamicInput.vue';
+import DividerTitle from '@ui/display/DividerTitle.vue';
+import GeneralCreateTask from './GeneralCreateTask.vue';
+
+
 
 const taskListStore = useTaskListStore()
 const newCheckItem = reactive<ICheckItem>({ name: "", isDone: false });

@@ -21,10 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { IconPlus, IconSettings } from '@tabler/icons-vue';
-import { useProjectStore } from '@/stores/project.ts';
 import { computed, inject } from 'vue';
+import { useProjectStore } from '@/stores/project.ts';
 import { pluralize } from '@/utils/pluralization.ts';
+import { IconPlus, IconSettings } from '@tabler/icons-vue';
 import TaskFilter from './TaskFilter.vue';
 
 const projectStore = useProjectStore();

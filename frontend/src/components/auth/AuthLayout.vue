@@ -17,10 +17,6 @@
 
 <script setup>
 import Logo from '@/icons/Logo.vue';
-import LoginForm from './LoginForm.vue';
-import RegisterForm from './RegisterForm.vue';
-
-
 </script>
 
 <style lang="scss" scoped></style>

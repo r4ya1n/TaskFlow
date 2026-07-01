@@ -17,15 +17,15 @@
 
 <script setup lang="ts">
 import { provide, ref } from 'vue';
-import CreateProject from '../project/CreateProject.vue';
-import Sidebar from '../sidebar/Sidebar.vue';
-import ProjectPanel from './ProjectPanel.vue';
 import { useProjectStore } from '@/stores/project.ts';
-import TaskDetail from './TaskDetail.vue';
 import { useTaskListStore } from '@/stores/task_list.ts';
-import TaskItem from './TaskItem.vue';
 import { useTaskStore } from '@/stores/task.ts';
-import CreateTask from './CreateTask.vue';
+import CreateProject from '../project/CreateProject/CreateProject.vue';
+import Sidebar from '../sidebar/Sidebar.vue';
+import ProjectPanel from './ProjectPanel/ProjectPanel.vue';
+import CreateTask from './CreateTask/CreateTask.vue';
+import TaskDetail from './TaskDetail/TaskDetail.vue';
+import TaskItem from './TaskItem.vue';
 
 const createProjectIsOpen = ref<boolean>(false);
 const createTaskIsOpen = ref<boolean>(false);

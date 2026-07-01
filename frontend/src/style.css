@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+@theme static {
 
     --font-sans: "Onest", "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

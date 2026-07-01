@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import BaseListItem from '../ui/BaseListItem.vue';
+import BaseListItem from '@ui/display/BaseListItem.vue';
 import type { Component } from 'vue';
 
 const { label, to, icon } = defineProps<{ label: string, to: string, icon?: Component }>();

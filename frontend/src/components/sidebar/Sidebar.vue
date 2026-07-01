@@ -28,18 +28,18 @@
 </template>
 
 <script setup lang="ts">
-import Logo from '@/icons/Logo.vue';
-import NavItem from './NavItem.vue';
-import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
-import NavGroup from './NavGroup.vue';
 import { inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import BaseAddButton from '../ui/BaseAddButton.vue';
-import ProjectItem from './ProjectItem.vue';
 import { useUserStore } from '@/stores/user.ts';
 import { useListProjectsStore } from '@/stores/project_list.ts';
 import { useProjectStore } from '@/stores/project.ts';
-import UserBadge from '../ui/UserBadge.vue';
+import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
+import Logo from '@/icons/Logo.vue';
+import BaseAddButton from '@ui/buttons/BaseAddButton.vue';
+import UserBadge from '@ui/display/UserBadge.vue';
+import NavGroup from './NavGroup.vue';
+import NavItem from './NavItem.vue';
+import ProjectItem from './ProjectItem.vue';
 
 onMounted(async () => {
     await projectListStore.fetchProjects();

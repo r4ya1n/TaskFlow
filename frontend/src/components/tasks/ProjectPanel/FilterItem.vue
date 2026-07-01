@@ -9,7 +9,7 @@
 <script setup lang="ts">
 
 import type { IOptionMeta } from '@/types/task.ts';
-import BaseListItem from '../ui/BaseListItem.vue';
+import BaseListItem from '@ui/display/BaseListItem.vue';
 
 const {optionMeta, isActive} = defineProps<{optionMeta: IOptionMeta, isActive: boolean}>();
 

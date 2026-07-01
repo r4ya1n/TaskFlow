@@ -37,17 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { TASK_PRIORITY_META } from '@/constants/TaskPriority';
-import { TASK_STATUS_META } from '@/constants/TaskStatus';
-import BaseDatePicker from '../ui/BaseDatePicker.vue';
-import { IconPlus } from '@tabler/icons-vue';
-import Tag from '../ui/Tag.vue';
-import DynamicInput from '../ui/DynamicInput.vue';
 import { computed, inject, ref } from 'vue';
-import BaseOptionSelector from '../ui/BaseOptionSelector.vue';
-import MemberAdder from './MemberAdder.vue';
 import { useProjectStore } from '@/stores/project.ts';
 import type { ICreateTaskForm } from '@/types/task.ts';
+import { TASK_PRIORITY_META } from '@/constants/TaskPriority';
+import { TASK_STATUS_META } from '@/constants/TaskStatus';
+import { IconPlus } from '@tabler/icons-vue';
+import BaseDatePicker from '@ui/form/BaseDatePicker.vue';
+import DynamicInput from '@ui/form/DynamicInput.vue';
+import BaseOptionSelector from '@ui/form/BaseOptionSelector.vue';
+import Tag from '@ui/display/Tag.vue';
+import MemberAdder from './MemberAdder.vue';
 
 const newTag = ref("")
 

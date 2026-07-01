@@ -20,16 +20,15 @@
 </template>
 
 <script setup lang="ts">
-import BaseInput from '../ui/BaseInput.vue'
-import BaseActionButton from '../ui/BaseActionButton.vue'
 import { inject, ref } from 'vue';
-import Avatar from '../ui/Avatar.vue';
-import { displayFullUsername } from '@/utils/displayUsername.ts';
 import type { CreateProjectForm, Role } from '@/types/project.ts';
+import { displayFullUsername } from '@/utils/displayUsername.ts';
 import { capitalizeText } from '@/utils/capitalizeText.ts';
 import { getUser } from '@/api/project.api.ts';
 import { Select } from 'primevue';
-
+import BaseInput from '@ui/form/BaseInput.vue'
+import Avatar from '@ui/display/Avatar.vue';
+import BaseActionButton from '@ui/buttons/BaseActionButton.vue';
 
 const email = ref('')
 const role = ref<Role>('MEMBER')

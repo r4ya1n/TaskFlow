@@ -41,7 +41,7 @@
                     type="password" autocomplete="new-password" placeholder="************"></BaseInput>
             </FormField>
         </form>
-        <BaseButton @click="onSubmit()" class="mb-9" label="Создать аккаунт"></BaseButton>
+        <BaseSubmitButton @click="onSubmit()" class="mb-9" label="Создать аккаунт" />
         <p class="text-text2 text-center font-medium">
             Уже есть аккаунт?
             <RouterLink to="/login" class="text-accent">Войти</RouterLink>
@@ -50,13 +50,13 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '@/components/ui/BaseSubmitButton.vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import FormField from '@/components/ui/FormField.vue';
 import { reactive } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { handleValidationErrors } from '@/utils/validation';
+import BaseInput from '@ui/form/BaseInput.vue';
+import FormField from '@ui/form/FormField.vue';
+import BaseSubmitButton from '@ui/buttons/BaseSubmitButton.vue';
 
 
 const user = useUserStore()

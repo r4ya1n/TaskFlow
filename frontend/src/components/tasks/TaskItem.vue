@@ -29,15 +29,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { TaskListItem } from '@/types/task';
-import Tag from '../ui/Tag.vue';
-import Avatar from '../ui/Avatar.vue';
-import TaskPill from '../ui/TaskPill.vue';
 import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
 import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
 import { displayShortUsername } from '@/utils/displayUsername.ts';
-import { computed } from 'vue';
-import Checkbox from '../ui/Checkbox.vue';
+import Tag from '@ui/display/Tag.vue';
+import Avatar from '@ui/display/Avatar.vue';
+import TaskPill from '@ui/display/TaskPill.vue';
+import Checkbox from '@ui/form/Checkbox.vue';
 
 const { task, selected } = defineProps<{ task: TaskListItem, selected?: boolean }>()
 

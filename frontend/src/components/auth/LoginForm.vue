@@ -1,9 +1,11 @@
 <template>
     <div class="font-semibold">
         <div class="flex items-center cursor-pointer">
-            <RouterLink to="/login" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">Вход
+            <RouterLink to="/login" class="flex-1 text-center py-3 border-b-2 border-accent text-accent">
+                Вход
             </RouterLink>
-            <RouterLink to="/register" class="flex-1 text-center py-3 border-b border-border text-text2">Регестрация
+            <RouterLink to="/register" class="flex-1 text-center py-3 border-b border-border text-text2">
+                Регестрация
             </RouterLink>
         </div>
         <div class="mb-4">
@@ -17,16 +19,15 @@
         <form @keypress.enter="onSubmit()" class="flex flex-col gap-2 mb-4">
             <FormField title="Email">
                 <BaseInput @focus="error = false" :class="error ? 'border-red hover:border-red' : ''"
-                    v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com">
-                </BaseInput>
+                    v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com" />
             </FormField>
             <FormField title="Пароль">
-                <BaseInput @focus="error = false"
-                    :class="error ? 'border-red hover:border-red' : ''" v-model="form.password"
-                    type="password" autocomplete="current-password" placeholder="************"></BaseInput>
+                <BaseInput @focus="error = false" :class="error ? 'border-red hover:border-red' : ''"
+                    v-model="form.password" type="password" autocomplete="current-password"
+                    placeholder="************" />
             </FormField>
         </form>
-        <BaseButton @click="onSubmit()" class="mb-9" label="Войти"></BaseButton>
+        <BaseSubmitButton @click="onSubmit()" class="mb-9" label="Войти" />
         <p class="text-text2 text-center font-medium">
             Нет аккаунта?
             <RouterLink to="/register" class="text-accent">Зарегестрируйтесь</RouterLink>
@@ -35,13 +36,13 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '@/components/ui/BaseSubmitButton.vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import FormField from '@/components/ui/FormField.vue';
 import axios from 'axios';
 import { reactive, ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
+import FormField from '@ui/form/FormField.vue';
+import BaseInput from '@ui/form/BaseInput.vue';
+import BaseSubmitButton from '@ui/buttons/BaseSubmitButton.vue';
 
 const user = useUserStore()
 

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import type { ICheckItem } from '@/types/task.ts';
-import Checkbox from '../ui/Checkbox.vue';
+import Checkbox from './Checkbox.vue';
 
 const { checkItem } = defineProps<{ checkItem: ICheckItem }>();
 

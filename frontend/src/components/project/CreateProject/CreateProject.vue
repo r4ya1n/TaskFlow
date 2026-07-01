@@ -39,15 +39,15 @@
 </template>
 
 <script setup lang="ts">
+import { inject, provide, reactive, ref, type Ref } from 'vue';
+import { useListProjectsStore } from '@/stores/project_list.ts';
+import type { CreateProjectForm } from '@/types/project.ts';
 import { IconArrowNarrowRight, IconArrowNarrowLeft, IconPlus, IconCheck } from '@tabler/icons-vue'
-import BaseModal from '../ui/BaseModal.vue'
-import BaseActionButton from '../ui/BaseActionButton.vue';
+import BaseModal from '@ui/BaseModal.vue'
+import BaseActionButton from '@ui/buttons/BaseActionButton.vue';
 import CreateProjectStepGeneral from './CreateProjectStepGeneral.vue';
 import CreateProjectStepMembers from './CreateProjectStepMembers.vue';
-import { inject, provide, reactive, ref, type Ref } from 'vue';
 import StepNumber from './StepNumber.vue';
-import type { CreateProjectForm } from '@/types/project.ts';
-import { useListProjectsStore } from '@/stores/project_list.ts';
 
 
 const step = ref<number>(1)

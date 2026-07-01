@@ -34,27 +34,27 @@
 </template>
 
 <script setup lang="ts">
-import { IconAlignLeft, IconCircleDashed, IconSearch } from '@tabler/icons-vue';
-import BaseInput from '../ui/BaseInput.vue';
-import Tag from '../ui/Tag.vue';
-import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
-import FilterItem from './FilterItem.vue';
-import type { OptionMeta } from '@/types/task.ts';
-import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
-import { useProjectStore } from '@/stores/project.ts';
 import { computed } from 'vue';
+import { useProjectStore } from '@/stores/project.ts';
 import { useTaskListStore } from '@/stores/task_list.ts';
+import type { IOptionMeta } from '@/types/task.ts';
+import { COLORS } from '@/constants/colors.ts';
+import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
+import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
+import { IconAlignLeft, IconCircleDashed, IconSearch } from '@tabler/icons-vue';
+import BaseInput from '@ui/form/BaseInput.vue';
+import Tag from '@ui/display/Tag.vue';
+import FilterItem from './FilterItem.vue';
 
 const projectStore = useProjectStore();
 const taskListStore = useTaskListStore();
 const priorityMeta = Object.entries(TASK_PRIORITY_META)
 const statusMeta = Object.entries(TASK_STATUS_META)
 
-const allOption: OptionMeta = {
+const allOption: IOptionMeta = {
     label: "Все",
     icon: IconCircleDashed,
-    textColor: "text-accent",
-    bgColor: "bg-accent/25"
+    color: COLORS.Accent
 }
 
 const filter = computed(() => taskListStore.filter)

@@ -43,15 +43,15 @@
 </template>
 
 <script setup lang="ts">
-import { IconCalendarEvent, IconX } from '@tabler/icons-vue';
-import Tag from '../ui/Tag.vue';
-import TaskPill from '../ui/TaskPill.vue';
+import { computed } from 'vue';
+import type { Task } from '@/types/task.ts';
 import { TASK_STATUS_META } from '@/constants/TaskStatus';
 import { TASK_PRIORITY_META } from '@/constants/TaskPriority.ts';
-import type { Task } from '@/types/task.ts';
+import { IconCalendarEvent, IconX } from '@tabler/icons-vue';
+import Tag from '@ui/display/Tag.vue';
+import TaskPill from '@ui/display/TaskPill.vue';
+import UserBadge from '@ui/display/UserBadge.vue';
 import DetailItem from './DetailItem.vue';
-import { computed } from 'vue';
-import UserBadge from '../ui/UserBadge.vue';
 import CheckList from './CheckList.vue';
 
 const { task } = defineProps<{ task: Task }>()
