@@ -26,8 +26,8 @@
                 <div @keypress.enter="addTag()" class="flex items-center gap-2 flex-wrap">
                     <Tag v-for="tag in form.tags" :key="tag" :label="tag"></Tag>
                     <div
-                        class="flex items-center gap-1 min-w-0 bg-bg3 text-text3 border border-border hover:border-border2 px-2 py-px rounded-2xl cursor-pointer">
-                        <IconPlus @click="addTag()" size="20" />
+                        class="flex items-center gap-1 min-w-0 bg-bg3 border border-border hover:border-border2 px-2 py-px rounded-2xl cursor-pointer">
+                        <IconPlus class="text-text3" @click="addTag()" size="20" />
                         <DynamicInput placeholder="Тег" v-model="newTag" />
                     </div>
                 </div>

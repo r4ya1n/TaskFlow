@@ -2,8 +2,8 @@
     <div class="flex flex-col gap-4 text-text3 text-sm">
         <div class="flex flex-col gap-2">
             <div class="uppercase">Поиск</div>
-            <BaseInput @keypress.enter="taskListStore.fetchTasks()" v-model="filter.title" :icon="IconSearch" placeholder="По названию..." />
-            <BaseInput @keypress.enter="taskListStore.fetchTasks()" v-model="filter.description" :icon="IconAlignLeft" placeholder="По описанию" />
+            <BaseInput class="text-text" @keypress.enter="taskListStore.fetchTasks()" v-model="filter.title" :icon="IconSearch" placeholder="По названию..." />
+            <BaseInput class="text-text" @keypress.enter="taskListStore.fetchTasks()" v-model="filter.description" :icon="IconAlignLeft" placeholder="По описанию" />
         </div>
         <div v-if="projectStore.tags?.length" class="flex flex-col gap-2">
             <div class="uppercase">Теги</div>

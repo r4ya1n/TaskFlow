@@ -1,11 +1,11 @@
 import type { Component } from "vue"
 import type { Member } from "./project"
+import type { Color } from "@/constants/colors"
 
-export type OptionMeta = {
+export interface IOptionMeta {
     label: string,
     icon: Component,
-    textColor: string,
-    bgColor: string
+    color: Color
 }
 
 export type TaskFilter = {

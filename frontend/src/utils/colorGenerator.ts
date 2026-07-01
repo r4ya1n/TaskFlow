@@ -1,10 +1,8 @@
-import { COLORS, type color } from '@/constants/colors';
-const COLOR_KEYS = Object.values(COLORS) as color[];
+import { COLOR_LIST, COLORS, type Color } from "@/constants/colors";
 
-// return pair class. Example: {text: "text-red", bg: "bg-red/25", border: "hover:border-red"}
-export function getColor(s: string): color {
+export function getColor(s: string, allowedColors: Color[] = COLOR_LIST): Color {
     if (!s) {
-        return COLORS.accent;
+        return COLORS.Accent;
     }
 
     let hash = 0;
@@ -13,5 +11,5 @@ export function getColor(s: string): color {
         hash = (hash * 31 + s.charCodeAt(i)) % 100000;
     }
 
-    return COLOR_KEYS[Math.abs(hash) % COLOR_KEYS.length];
+    return allowedColors[Math.abs(hash) % allowedColors.length];
 }

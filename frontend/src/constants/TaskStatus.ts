@@ -6,25 +6,21 @@ export const TASK_STATUS_META: Record<Status, OptionMeta> = {
     TODO: {
         label: "К работе",
         icon: IconCircle,
-        textColor: COLORS.accent2.text,
-        bgColor: COLORS.accent2.bg
+        color: COLORS.Accent2
     },
     IN_PROGRESS: {
         label: "В работе",
         icon: IconPlayerPlay,
-        textColor: COLORS.blue.text,
-        bgColor: COLORS.blue.bg
+        color: COLORS.Blue
     },
     IN_REVIEW: {
         label: "На ревью",
         icon: IconEye,
-        textColor: COLORS.amber.text,
-        bgColor: COLORS.amber.bg
+        color: COLORS.Amber
     },
     DONE: {
         label: "Выполнено",
         icon: IconCircleCheck,
-        textColor: COLORS.teal.text,
-        bgColor: COLORS.teal.bg
+        color: COLORS.Teal
     }
 }

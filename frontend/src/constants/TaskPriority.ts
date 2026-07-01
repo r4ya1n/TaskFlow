@@ -6,25 +6,21 @@ export const TASK_PRIORITY_META: Record<Priority, OptionMeta> = {
     URGENT: {
         label: "Срочно",
         icon: IconFlame,
-        textColor: COLORS.red.text,
-        bgColor: COLORS.red.bg
+        color: COLORS.Red
     },
     HIGH: {
         label: "Высокий",
         icon: IconArrowNarrowUp,
-        textColor: COLORS.amber.text,
-        bgColor: COLORS.amber.bg
+        color: COLORS.Amber
     },
     MEDIUM: {
         label: "Средний",
         icon: IconMinus,
-        textColor: COLORS.blue.text,
-        bgColor: COLORS.blue.bg
+        color: COLORS.Blue
     },
     LOW: {
         label: "Низкий",
         icon: IconArrowNarrowDown,
-        textColor: COLORS.grey.text,
-        bgColor: COLORS.grey.bg
+        color: COLORS.Gray
     },
 }

@@ -1,10 +1,15 @@
 <template>
-    <div class="px-2 py-px rounded-2xl cursor-pointer w-fit" :class="[color.text, color.bg, isActive && color.outline]">
+    <div class="px-2 py-px rounded-2xl cursor-pointer w-fit" :style="{
+        color: `var(--color-${color})`,
+        border: `1px solid color-mix(in srgb, var(--color-${color}) 20%, transparent)`,
+        backgroundColor: `color-mix(in srgb, var(--color-${color}) 10%, transparent)`
+    }">
         {{ label }}
     </div>
 </template>
 
 <script setup lang="ts">
+import { COLORS } from '@/constants/colors';
 import { getColor } from '@/utils/colorGenerator';
 import { computed } from 'vue';
 const { label, isActive } = defineProps({
@@ -18,10 +23,8 @@ const { label, isActive } = defineProps({
     }
 })
 
-const color = computed(() => getColor(label));
+const color = computed(() => getColor(label, [COLORS.Accent, COLORS.Blue, COLORS.Teal, COLORS.Amber, COLORS.Pink]));
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

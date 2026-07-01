@@ -4,7 +4,7 @@
       v-model="modelValue"
       type="text"
       :placeholder="placeholder"
-      class="focus:outline-none bg-transparent max-w-full"
+      class="placeholder:text-text3 focus:outline-none bg-transparent max-w-full"
       :style="{ width: inputWidth + 'px' }"
     >
     <span ref="measureRef" class="invisible absolute whitespace-pre top-0 left-0 -z-10">

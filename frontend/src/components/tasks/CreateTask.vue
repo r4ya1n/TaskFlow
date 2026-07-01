@@ -8,7 +8,7 @@
         <div>
             <BaseInput v-model="form.title" placeholder="Название задачи..."></BaseInput>
             <textarea
-                class="mt-2 min-h-20 w-full text-text3 bg-bg3 resize-none p-2 rounded-md border border-border hover:border-border2 focus:outline-none"
+                class="mt-2 min-h-20 w-full placeholder:text-text3 bg-bg3 resize-none p-2 rounded-md border border-border hover:border-border2 focus:outline-none"
                 name="" id="" v-model="form.description" placeholder="Описание..."></textarea>
         </div>
         <div>
@@ -21,8 +21,8 @@
                 <CheckItem v-for="сheckItem in form.checkItems" :key="сheckItem.name" :check-item="сheckItem">
                 </CheckItem>
                 <div
-                    class="flex items-center gap-2 px-3 py-2 text-text3 text-sm rounded-md hover:outline hover:outline-border">
-                    <IconPlus class="cursor-pointer" @click="addCheckItem()" size="18" />
+                    class="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:outline hover:outline-border">
+                    <IconPlus class="text-text3 cursor-pointer" @click="addCheckItem()" size="18" />
                     <DynamicInput v-model="newCheckItem.name" placeholder="Добавить пункт" />
                 </div>
             </div>
