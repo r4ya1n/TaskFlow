@@ -13,7 +13,7 @@ class ProjectTagsView(ListAPIView):
     def get_queryset(self):
         project_id = self.kwargs['project_id']
         
-        return Tag.objects.filter(tasks__project_id=project_id)
+        return Tag.objects.filter(tasks__project_id=project_id).distinct()
 
 class ProjectViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
