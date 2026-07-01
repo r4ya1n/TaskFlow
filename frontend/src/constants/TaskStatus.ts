@@ -1,8 +1,8 @@
 import { IconCircle, IconCircleCheck, IconEye, IconPlayerPlay } from "@tabler/icons-vue";
 import { COLORS } from "./colors";
-import type { OptionMeta, Status } from "@/types/task";
+import type { IOptionMeta, Status } from "@/types/task";
 
-export const TASK_STATUS_META: Record<Status, OptionMeta> = {
+export const TASK_STATUS_META: Record<Status, IOptionMeta> = {
     TODO: {
         label: "К работе",
         icon: IconCircle,

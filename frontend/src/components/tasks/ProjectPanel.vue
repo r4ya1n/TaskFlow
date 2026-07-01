@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-border px-4 py-6 border-r border-border w-60">
+    <div class="px-4 py-6 border-r border-border w-60">
         <div class="mb-5">
             <div class="mb-3">
                 <div class="flex items-center justify-between gap-5 text-2xl font-semibold">

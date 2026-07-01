@@ -1,7 +1,7 @@
 <template>
     <div class="px-2 py-px rounded-2xl cursor-pointer w-fit" :style="{
         color: `var(--color-${color})`,
-        border: `1px solid color-mix(in srgb, var(--color-${color}) 20%, transparent)`,
+        border: isActive ? `1px solid var(--color-${color})` : `1px solid color-mix(in srgb, var(--color-${color}) 20%, transparent)`,
         backgroundColor: `color-mix(in srgb, var(--color-${color}) 10%, transparent)`
     }">
         {{ label }}

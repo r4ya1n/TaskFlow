@@ -1,8 +1,8 @@
 import { IconArrowNarrowDown, IconArrowNarrowUp, IconFlame, IconMinus } from "@tabler/icons-vue";
 import { COLORS } from "./colors";
-import type { OptionMeta, Priority } from "@/types/task";
+import type { IOptionMeta, Priority } from "@/types/task";
 
-export const TASK_PRIORITY_META: Record<Priority, OptionMeta> = {
+export const TASK_PRIORITY_META: Record<Priority, IOptionMeta> = {
     URGENT: {
         label: "Срочно",
         icon: IconFlame,

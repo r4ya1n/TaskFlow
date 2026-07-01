@@ -2,7 +2,7 @@ import { http } from "@/api/http"
 import type { User } from "@/types/auth"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
-import type { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh';
+import axios from "axios";
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
@@ -20,10 +20,9 @@ export const useUserStore = defineStore('user', () => {
     if (!refreshToken.value) {
       throw new Error('No refresh token available')
     }
-    const response = await http.post(
-      '/auth/token/refresh/',
-      { refresh: refreshToken.value },
-      { skipAuthRefresh: true } as AxiosAuthRefreshRequestConfig,
+    const response = await axios.post(
+      'api/auth/token/refresh/',
+      { refresh: refreshToken.value }
 
     );
     token.value = response.data.access
@@ -39,14 +38,14 @@ export const useUserStore = defineStore('user', () => {
     last_name?: string,
     password: string
   }) => {
-    const response = await http.post('/auth/register/', credential)
+    const response = await axios.post('api/auth/register/', credential)
     token.value = response.data.access
     refreshToken.value = response.data.refresh
     await fetchUser()
   }
 
   const login = async (credentials: { email: string; password: string }) => {
-    const response = await http.post('/auth/login/', credentials)
+    const response = await axios.post('api/auth/login/', credentials)
     token.value = response.data.access
     refreshToken.value = response.data.refresh
     await fetchUser()
@@ -54,14 +53,8 @@ export const useUserStore = defineStore('user', () => {
 
   const logout = async () => {
     try {
-      console.log('start logout');
-      await http.post('/auth/logout/', { refresh: refreshToken.value },
-        { skipAuthRefresh: true } as AxiosAuthRefreshRequestConfig
-      )
-      console.log('end logout 1');
+      await axios.post('api/auth/logout/', { refresh: refreshToken.value })
     } finally {
-      console.log('end logout 2');
-      
       user.value = null
       token.value = null
       refreshToken.value = null

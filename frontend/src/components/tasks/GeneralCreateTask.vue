@@ -44,7 +44,6 @@ import { IconPlus } from '@tabler/icons-vue';
 import Tag from '../ui/Tag.vue';
 import DynamicInput from '../ui/DynamicInput.vue';
 import { computed, inject, ref } from 'vue';
-import { capitalizeText } from '@/utils/capitalizeText.ts';
 import BaseOptionSelector from '../ui/BaseOptionSelector.vue';
 import MemberAdder from './MemberAdder.vue';
 import { useProjectStore } from '@/stores/project.ts';
@@ -61,8 +60,7 @@ const addTag = () => {
     if (!newTag.value) {
         return
     }
-    const name = capitalizeText(newTag.value)
-    form.tags.push(name)
+    form.tags.push(newTag.value.toLowerCase())
     newTag.value = ''
 }
 

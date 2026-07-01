@@ -4,8 +4,8 @@
         <CreateTask v-if="createTaskIsOpen"></CreateTask>
         <div class="flex overflow-hidden h-full min-h-0">
             <Sidebar />
-            <ProjectPanel v-if="projectStore.project" class="" />
-            <div class="@container flex-1 p-4">
+            <ProjectPanel class="overflow-y-auto scrollbar-thin scrollbar-thumb-border" v-if="projectStore.project"/>
+            <div class="@container flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-border">
                 <div class="grid @xl:grid-cols-2 gap-3 h-fit">
                     <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :selected="taskIsSelected(task.id)" :key="task.id" :task="task" />
                 </div>
