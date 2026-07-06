@@ -47,10 +47,12 @@ export const useTaskListStore = defineStore('tasks', () => {
     const postTask = async (form: ICreateTaskForm): Promise<void> => {
         if (!projectStore.project) return
 
-        const checkItems = ((item: ICheckItem) => ({
+        const checkItems = form.checkItems.map((item: ICheckItem) => ({
             name: item.name,
             is_done: item.isDone
         }))
+        console.log(checkItems);
+        
         await http.post(`projects/${projectStore.project.id}/tasks/`, {
             title: form.title,
             description: form.description,
@@ -58,7 +60,7 @@ export const useTaskListStore = defineStore('tasks', () => {
             priority: form.priority,
             deadline: form.deadline,
             executor: form.executor,
-            checkItems: checkItems,
+            check_items: checkItems,
             tags: form.tags
         })
         await fetchTasks()
