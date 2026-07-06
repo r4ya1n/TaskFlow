@@ -23,7 +23,7 @@ class Tag(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=200)
     tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
-    description = models.TextField()
+    description = models.TextField(blank=True)
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
