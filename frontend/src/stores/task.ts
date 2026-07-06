@@ -58,14 +58,20 @@ export const useTaskStore = defineStore('task', () => {
 
     const patchTask = async (id: number, patch: Partial<Task>) => {
         if (!projectStore.project) return
-        const res = await http.patch<Task>(`projects/${projectStore.project.id}/tasks/${id}/`, patch)
-        console.log(res);
+        await http.patch<Task>(`projects/${projectStore.project.id}/tasks/${id}/`, patch)
     }
 
     const patchCheckItem = async (id: number, patch: Partial<ICheckItem>) => {
         if (!projectStore.project || !task.value) return
-        const res = await http.patch<ICheckItem>(`projects/${projectStore.project.id}/tasks/${task.value.id}/check-items/${id}/`, patch)
+        await http.patch<ICheckItem>(`projects/${projectStore.project.id}/tasks/${task.value.id}/check-items/${id}/`, patch)
+    }
+
+    const deleteTask = async () => {
+        if (!projectStore.project || !task.value) return
+        const res = await http.delete(`projects/${projectStore.project.id}/tasks/${task.value.id}/`)
         console.log(res);
+        activeTaskId.value = null
+        fetchTaskList()
     }
 
     watch(
@@ -106,5 +112,5 @@ export const useTaskStore = defineStore('task', () => {
             await fetchTaskList()
         }
     )
-    return { task, taskList, filter, activeTaskId, fetchTask, fetchTaskList, postTask, patchTask, patchCheckItem }
+    return { task, taskList, filter, activeTaskId, fetchTask, fetchTaskList, postTask, patchTask, patchCheckItem, deleteTask }
 })

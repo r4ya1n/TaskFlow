@@ -38,6 +38,7 @@
                 </div>
             </div>
             <CheckList :check-list="task.checkItems" />
+            <button @click="onDelete" class="text-sm text-red2 border border-red2 p-2 rounded-md cursor-pointer">Удалить задачу</button>
         </div>
     </div>
 </template>
@@ -53,14 +54,22 @@ import TaskPill from '@ui/display/TaskPill.vue';
 import UserBadge from '@ui/display/UserBadge.vue';
 import DetailItem from './DetailItem.vue';
 import CheckList from './CheckList.vue';
+import { useTaskStore } from '@/stores/task.ts';
 
 const { task } = defineProps<{ task: Task }>()
 
 const emit = defineEmits(["closed"])
 
+const taskStore = useTaskStore()
 const status = computed(() => TASK_STATUS_META[task.status])
 const priority = computed(() => TASK_PRIORITY_META[task.priority])
 const displayDeadline = computed(() => new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline))
+
+const onDelete = async () => {
+    console.log('delete');
+    
+    await taskStore.deleteTask()
+}
 
 </script>
 
