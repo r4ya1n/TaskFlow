@@ -1,22 +1,31 @@
-import axios, { type InternalAxiosRequestConfig } from 'axios'
+import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
 import { useUserStore } from '@/stores/user.ts';
+import snakecaseKeys from 'snakecase-keys'
+import camelcaseKeys from 'camelcase-keys'
 
 export const http = axios.create({
   baseURL: '/api',
   timeout: 5000
 })
 
-http.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  if (config.url?.includes("/auth/logout/") || config.url?.includes("/auth/token/refresh/")) {
-    return config
-  }
+http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const userStore = useUserStore()
+  if (config.data) {
+    config.data = snakecaseKeys(config.data, {deep: true})
+  }
   if (userStore.token) {
     config.headers.Authorization = `Bearer ${userStore.token}`
   }
   return config;
 });
+
+http.interceptors.response.use((response: AxiosResponse) => {
+  if (response.data) {
+    response.data = camelcaseKeys(response.data, {deep: true})
+  }
+  return response
+})
 
 const refreshAuth = async (failedRequest: any) => {
   if (failedRequest.response.config.url.includes('/auth/token/refresh/')) {

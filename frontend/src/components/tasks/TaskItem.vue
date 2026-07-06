@@ -2,7 +2,7 @@
     <div :class="selected ? 'border-accent' : 'border-border hover:border-text5'" class="flex flex-col gap-2 text-xs p-3 bg-bg2 border rounded-xl
      cursor-pointer">
         <div class="flex items-center gap-4">
-            <Checkbox :size="24" :class="selected ? 'border-accent!' : ''" :done="isDone" />
+            <Checkbox @click.stop="toggleDone" :size="24" :class="selected ? 'border-accent!' : ''" :done="isDone" />
             <div class="">
                 <div class="mb-1 text-base" :class="isDone ? 'text-text3 line-through' : ''">{{ task.title }}</div>
                 <div class="flex gap-1">
@@ -38,14 +38,22 @@ import Tag from '@ui/display/Tag.vue';
 import Avatar from '@ui/display/Avatar.vue';
 import TaskPill from '@ui/display/TaskPill.vue';
 import Checkbox from '@ui/form/Checkbox.vue';
+import { useTaskStore } from '@/stores/task';
 
 const { task, selected } = defineProps<{ task: TaskListItem, selected?: boolean }>()
 
+const taskStore = useTaskStore()
 const status = TASK_STATUS_META[task.status]
 const priority = TASK_PRIORITY_META[task.priority]
 const displayDeadline = new Intl.DateTimeFormat('ru-RU', { day: "numeric", month: "long" }).format(task.deadline)
 
 const isDone = computed<boolean>(() => task.status === "DONE");
+
+const toggleDone = async () => {
+    if (task.status !== "DONE" && task.status !== "IN_PROGRESS") return
+    task.status = task.status === "DONE" ? "IN_PROGRESS" : "DONE"
+    await taskStore.patchTask(task.id, {"status": task.status})
+}
 
 </script>
 

@@ -6,7 +6,7 @@ export type Status = "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE"
 export type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT"
 
 export interface ICheckItem {
-    id?: number,
+    id: number,
     name: string,
     isDone: boolean
 }

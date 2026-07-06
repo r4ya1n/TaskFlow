@@ -10,7 +10,7 @@
             </div>
         </header>
         <div class="flex flex-col gap-4 p-5">
-            <div>
+            <div v-if="task.desription">
                 <h4 class="uppercase text-text3 text-sm mb-2">Описание</h4>
                 <div class="text-text2 text-sm p-3 bg-bg3 rounded-xl">{{ task?.desription }}</div>
             </div>

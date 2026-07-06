@@ -1,6 +1,6 @@
 <template>
     <div class="font-medium flex items-center gap-2 px-3 py-2 bg-bg3 rounded-md border border-border">
-        <Checkbox :size="20" :done="checkItem.isDone" />
+        <Checkbox @click="onCheckbox" :size="20" :done="checkItem.isDone" />
         <div class="text-sm">
             {{ checkItem.name }}
         </div>
@@ -12,6 +12,12 @@ import type { ICheckItem } from '@/types/task.ts';
 import Checkbox from './Checkbox.vue';
 
 const { checkItem } = defineProps<{ checkItem: ICheckItem }>();
+const emit = defineEmits<{check: []}>()
+
+const onCheckbox = () => {
+    checkItem.isDone = !checkItem.isDone
+    emit('check')
+}
 
 </script>
 
