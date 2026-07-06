@@ -2,8 +2,8 @@
     <div class="flex flex-col gap-4 text-text3 text-sm">
         <div class="flex flex-col gap-2">
             <div class="uppercase">Поиск</div>
-            <BaseInput class="text-text" @keypress.enter="taskListStore.fetchTasks()" v-model="filter.title" :icon="IconSearch" placeholder="По названию..." />
-            <BaseInput class="text-text" @keypress.enter="taskListStore.fetchTasks()" v-model="filter.description" :icon="IconAlignLeft" placeholder="По описанию" />
+            <BaseInput class="text-text" @keypress.enter="taskStore.fetchTaskList()" v-model="filter.title" :icon="IconSearch" placeholder="По названию..." />
+            <BaseInput class="text-text" @keypress.enter="taskStore.fetchTaskList()" v-model="filter.description" :icon="IconAlignLeft" placeholder="По описанию" />
         </div>
         <div v-if="projectStore.tags?.length" class="flex flex-col gap-2">
             <div class="uppercase">Теги</div>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useProjectStore } from '@/stores/project.ts';
-import { useTaskListStore } from '@/stores/task_list.ts';
+import { useTaskStore } from '@/stores/task.ts';
 import type { IOptionMeta } from '@/types/task.ts';
 import { COLORS } from '@/constants/colors.ts';
 import { TASK_STATUS_META } from '@/constants/TaskStatus.ts';
@@ -47,7 +47,7 @@ import Tag from '@ui/display/Tag.vue';
 import FilterItem from './FilterItem.vue';
 
 const projectStore = useProjectStore();
-const taskListStore = useTaskListStore();
+const taskStore = useTaskStore()
 const priorityMeta = Object.entries(TASK_PRIORITY_META)
 const statusMeta = Object.entries(TASK_STATUS_META)
 
@@ -57,12 +57,12 @@ const allOption: IOptionMeta = {
     color: COLORS.Accent
 }
 
-const filter = computed(() => taskListStore.filter)
+const filter = computed(() => taskStore.filter)
 
 const toggleTagFilter = (tag: string) => {
     const tags = filter.value.tags
     tags.has(tag) ? tags.delete(tag) : tags.add(tag)
-    taskListStore.fetchTasks()
+    taskStore.fetchTaskList()
 }
 
 </script>

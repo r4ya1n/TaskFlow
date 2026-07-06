@@ -1,10 +1,11 @@
 import { http } from "@/api/http";
-import type { Member, Project } from "@/types/project";
+import type { CreateProjectForm, Member, Project, ProjectListItem } from "@/types/project";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
 export const useProjectStore = defineStore('project', () => {
     const project = ref<Project | null>(null)
+    const projectList = ref<ProjectListItem[]>([])
     const activeProjectId = ref<number | null>(null)
     const membersById = ref<Record<number, Member>>({})
     const tags = ref<string[] | null>(null)
@@ -39,6 +40,27 @@ export const useProjectStore = defineStore('project', () => {
         }
     }
 
+    const fetchProjectList = async (): Promise<void> => {
+        const response = await http.get('/projects/')
+        projectList.value = response.data.results.map((raw: any): ProjectListItem=> ({
+            id: raw.id,
+            title: raw.title
+        }))
+    }
+
+    const postProject = async (form: CreateProjectForm): Promise<void> => {
+            const members = form.members.map(member => ({
+                email: member.email,
+                role: member.role,
+            }))
+            await http.post('/projects/', {
+                title: form.title,
+                default_visability: form.type,
+                members: members
+            })
+            await fetchProjectList()
+        }
+
     watch (() => activeProjectId.value, async (newId) => {
         if (!newId) {
             project.value = null
@@ -48,5 +70,5 @@ export const useProjectStore = defineStore('project', () => {
         await Promise.allSettled([fetchProject(), fetchTags()]) 
     })
 
-    return { project, activeProjectId, membersById, tags, fetchProject }
+    return { project, projectList, activeProjectId, membersById, tags, fetchProject, fetchProjectList, postProject }
 })

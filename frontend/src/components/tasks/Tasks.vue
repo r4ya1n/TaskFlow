@@ -7,7 +7,7 @@
             <ProjectPanel class="overflow-y-auto scroll" v-if="projectStore.project"/>
             <div class="@container flex-1 p-4 overflow-y-auto scroll">
                 <div class="grid @xl:grid-cols-2 gap-3 h-fit">
-                    <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :selected="taskIsSelected(task.id)" :key="task.id" :task="task" />
+                    <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskStore.taskList" :selected="taskIsSelected(task.id)" :key="task.id" :task="task" />
                 </div>
             </div>
             <TaskDetail class="scroll" @closed="taskStore.activeTaskId=null" v-if="taskStore.task" :task="taskStore.task" />
@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import { provide, ref } from 'vue';
 import { useProjectStore } from '@/stores/project.ts';
-import { useTaskListStore } from '@/stores/task_list.ts';
 import { useTaskStore } from '@/stores/task.ts';
 import CreateProject from '../project/CreateProject/CreateProject.vue';
 import Sidebar from '../sidebar/Sidebar.vue';
@@ -30,7 +29,6 @@ import TaskItem from './TaskItem.vue';
 const createProjectIsOpen = ref<boolean>(false);
 const createTaskIsOpen = ref<boolean>(false);
 const projectStore = useProjectStore();
-const taskListStore = useTaskListStore();
 const taskStore = useTaskStore()
 
 provide('createTaskIsOpen', createTaskIsOpen)

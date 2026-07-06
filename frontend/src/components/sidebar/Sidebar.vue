@@ -12,7 +12,7 @@
                     <NavItem to="/" label="Календарь" :icon="IconCalendarEvent" />
                 </NavGroup>
                 <NavGroup title="Проекты">
-                    <ProjectItem v-for="prj in projectListStore.projects" @click="selectProject(prj.id)" :key="prj.id" :project="prj"></ProjectItem>
+                    <ProjectItem v-for="prj in projectStore.projectList" @click="selectProject(prj.id)" :key="prj.id" :project="prj"></ProjectItem>
                     <BaseAddButton @click="createProjectIsOpen = true" label="Новый проект"></BaseAddButton>
                 </NavGroup>
             </nav>
@@ -31,7 +31,6 @@
 import { inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user.ts';
-import { useListProjectsStore } from '@/stores/project_list.ts';
 import { useProjectStore } from '@/stores/project.ts';
 import { IconCalendarEvent, IconChecklist, IconLayoutDashboard, IconLogout, IconSettings } from '@tabler/icons-vue';
 import Logo from '@/icons/Logo.vue';
@@ -42,10 +41,9 @@ import NavItem from './NavItem.vue';
 import ProjectItem from './ProjectItem.vue';
 
 onMounted(async () => {
-    await projectListStore.fetchProjects();
+    await projectStore.fetchProjectList();
 })
 
-const projectListStore = useListProjectsStore();
 const projectStore = useProjectStore()
 const user = useUserStore()
 

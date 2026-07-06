@@ -43,8 +43,8 @@
 <script setup lang="ts">
 import { inject, provide, reactive, type Ref } from 'vue';
 import axios from 'axios';
-import { useTaskListStore } from '@/stores/task_list.ts';
 import type { ICheckItem, ICreateTaskForm } from '@/types/task.ts';
+import { useTaskStore } from '@/stores/task.ts';
 import { capitalizeText } from '@/utils/capitalizeText.ts';
 import { IconCheck, IconPlus } from '@tabler/icons-vue';
 import BaseModal from '@ui/BaseModal.vue';
@@ -55,9 +55,7 @@ import DynamicInput from '@ui/form/DynamicInput.vue';
 import DividerTitle from '@ui/display/DividerTitle.vue';
 import GeneralCreateTask from './GeneralCreateTask.vue';
 
-
-
-const taskListStore = useTaskListStore()
+const taskStore = useTaskStore()
 const newCheckItem = reactive<ICheckItem>({ name: "", isDone: false });
 
 const form = reactive<ICreateTaskForm>({
@@ -76,7 +74,7 @@ const createTaskIsOpen = inject<Ref<boolean>>("createTaskIsOpen")!
 
 const postTask = async () => {
     try {
-        await taskListStore.postTask({...form})
+        await taskStore.postTask({...form})
         createTaskIsOpen.value = false
     } catch (e) {
         if (axios.isAxiosError(e)) {
