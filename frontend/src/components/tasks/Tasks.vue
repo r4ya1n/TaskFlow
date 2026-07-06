@@ -4,13 +4,13 @@
         <CreateTask v-if="createTaskIsOpen"></CreateTask>
         <div class="flex overflow-hidden h-full min-h-0">
             <Sidebar />
-            <ProjectPanel class="overflow-y-auto scrollbar-thin scrollbar-thumb-border" v-if="projectStore.project"/>
-            <div class="@container flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-border">
+            <ProjectPanel class="overflow-y-auto scroll" v-if="projectStore.project"/>
+            <div class="@container flex-1 p-4 overflow-y-auto scroll">
                 <div class="grid @xl:grid-cols-2 gap-3 h-fit">
                     <TaskItem @click="taskStore.activeTaskId = task.id" v-for="task in taskListStore.tasks" :selected="taskIsSelected(task.id)" :key="task.id" :task="task" />
                 </div>
             </div>
-            <TaskDetail @closed="taskStore.activeTaskId=null" v-if="taskStore.task" :task="taskStore.task" />
+            <TaskDetail class="scroll" @closed="taskStore.activeTaskId=null" v-if="taskStore.task" :task="taskStore.task" />
         </div>
     </div>
 </template>
@@ -42,4 +42,11 @@ const taskIsSelected = (id: number) => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+@reference "@/style.css";
+
+.scroll {
+    @apply overflow-y-auto scrollbar-thin scrollbar-thumb-border;
+}
+
+</style>

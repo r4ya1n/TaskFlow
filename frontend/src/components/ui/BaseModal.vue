@@ -1,6 +1,6 @@
 <template>
   <div class="absolute inset-0 bg-bg1/80 flex items-center justify-center">
-    <div class="w-140 rounded-xl bg-bg1 border border-border">
+    <div class="w-140 flex flex-col max-h-[90%] rounded-xl bg-bg1 border border-border">
       <header class="text-text3 p-6 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <slot name="icon" />
@@ -18,7 +18,7 @@
         </button>
       </header>
 
-      <div class="px-4 py-3 flex flex-col gap-4 border-y border-border">
+      <div class="px-4 py-3 flex flex-col gap-4 border-y border-border overflow-y-auto scrollbar-thin scrollbar-thumb-border">
         <slot />
       </div>
 
