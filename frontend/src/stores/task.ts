@@ -80,7 +80,6 @@ export const useTaskStore = defineStore('task', () => {
             name: item.name,
             is_done: item.isDone
         }))
-        console.log(checkItems);
 
         await http.post(`projects/${projectStore.project.id}/tasks/`, {
             title: form.title,

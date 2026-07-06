@@ -108,3 +108,6 @@ class TaskCreateSerializer(serializers.ModelSerializer):
                 )
 
         return task
+    
+    def to_representation(self, instance):
+        return TaskDetailSerializer(instance, context=self.context).data
